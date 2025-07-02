@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 
 import './Login.scss';
 import cache from '@app/core/cache';
@@ -9,10 +8,10 @@ import { LOCAL_USER_KEY } from '@app/configs/auth.config';
 
 const Login = () => {
   const navigate = useNavigate();
-  const handleLogin = ()=> {
-    cache.setCache(LOCAL_USER_KEY,{token:'ssss'});
+  const handleLogin = () => {
+    cache.setCache(LOCAL_USER_KEY, { token: 'ssss' });
     navigate('/')
-    
+
   }
   return <><Button onClick={handleLogin}>Login</Button></>
 }

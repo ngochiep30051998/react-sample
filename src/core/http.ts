@@ -1,14 +1,16 @@
 // import { useAuthStore } from "../stores/auth";
 import axios from "axios";
-import UserService from "@app/services/UserService";
 import { transformReq } from "./helper";
+import cache from '@app/core/cache';
+import { LOCAL_USER_KEY } from "@app/configs/auth.config";
+
 
 const HTTP = axios.create({
   baseURL: `${import.meta.env.VITE_PUBLIC_API_URL}`
 })
 
 HTTP.interceptors.request.use((req) => {
-  const token = UserService.getToken()
+  const token = cache.getCache(LOCAL_USER_KEY)?.data?.token;
   if (token && req.headers) {
     req.headers['Authorization'] = `Bearer ${token}`
   }
@@ -25,7 +27,7 @@ HTTP.interceptors.response.use(
   (err) => {
     const data = err.response && err.response.data;
     if (err.response && err.response.status === 401 && Event !== undefined) {
-      UserService.doLogout();
+      //logout user
     }
     console.error('HTTP error: ', err);
     err.message = data?.message || err.message;
