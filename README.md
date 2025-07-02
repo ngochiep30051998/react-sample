@@ -199,7 +199,7 @@ npm run build
 
 ## 📄 License
 
-This project is private and confidential.
+This project is public
 ## 👨‍💻 Author
 
 **Hiep Nguyen Ngoc**
