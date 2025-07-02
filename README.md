@@ -200,3 +200,8 @@ npm run build
 ## 📄 License
 
 This project is private and confidential.
+## 👨‍💻 Author
+
+**Hiep Nguyen Ngoc**
+- Portfolio: https://hiepnn.petite-dev.com/
+- LinkedIn: https://www.linkedin.com/in/hi%E1%BB%87p-nguy%E1%BB%85n-b89aa1189
