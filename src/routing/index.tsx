@@ -1,4 +1,5 @@
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import { RouterProvider, createBrowserRouter } from 'react-router';
+import { Suspense } from 'react';
 import { RootBoundary } from "../components/RootBoundary";
 import MasterLayout from "../layouts/master-layout";
 import * as Dashboard from '../modules/dashboard';
@@ -20,6 +21,7 @@ const router = createBrowserRouter([
     {
         path: '/',
         errorElement: <RootBoundary />,
+        HydrateFallback: Loading,
         children: [
             {
                 path: '/',
@@ -45,10 +47,9 @@ const router = createBrowserRouter([
 })
 
 const Router = () => (
-    <RouterProvider
-        router={router}
-        fallbackElement={<Loading />}
-    />
+    <Suspense fallback={<Loading />}>
+        <RouterProvider router={router} />
+    </Suspense>
 )
 export const MenuItems: IMenuItem[] = [
     ...modules.map(x => x.MenuItems).reduce((prev, curr) => prev.concat(curr), [])

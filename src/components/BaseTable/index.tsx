@@ -1,5 +1,5 @@
 import { ReactNode, useCallback } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router';
 import { Table } from 'antd';
 import type { ColumnsType, TableProps } from 'antd/es/table';
 

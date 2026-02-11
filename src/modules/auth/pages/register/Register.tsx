@@ -4,7 +4,7 @@ import { FacebookIcon, GoogleIcon } from '@app/assets/icons';
 import cache from '@app/core/cache';
 import { LOCAL_USER_KEY } from '@app/configs/auth.config';
 import { getPermissionsForRoles, ROLES } from '@app/configs/rbac.config';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router';
 
 const { Title, Text } = Typography;
 

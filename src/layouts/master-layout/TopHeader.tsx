@@ -13,7 +13,7 @@ import {
 } from '@ant-design/icons';
 import { Avatar, Badge, Button, Dropdown } from 'antd';
 import type { MenuProps } from 'antd';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 
 export default function TopHeader() {
   const navigate = useNavigate();

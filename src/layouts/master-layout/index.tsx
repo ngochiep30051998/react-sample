@@ -1,4 +1,4 @@
-import { Outlet } from 'react-router-dom';
+import { Outlet } from 'react-router';
 import { App, ConfigProvider, Drawer, theme } from 'antd';
 import type { ThemeConfig } from 'antd';
 import useThemeStore from '@app/store/useThemeStore';

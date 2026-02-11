@@ -1,6 +1,7 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@layer theme, base, components, utilities;
+@import "tailwindcss/theme" layer(theme);
+@import "tailwindcss/utilities" layer(utilities);
+@config "../tailwind.config.js";
 
 html,
 body {
@@ -47,14 +48,25 @@ svg {
 
   .ant-input,
   .ant-input-affix-wrapper,
-  .ant-select-selector {
+  .ant-select-selector,
+  .ant-input-number,
+  .ant-picker {
     @apply !rounded-lg transition-all duration-200;
   }
 
+  /* Reset antd v6 outline-based focus ring for all input types */
   .ant-input:focus,
+  .ant-input:focus-within,
   .ant-input-affix-wrapper:focus,
-  .ant-input-affix-wrapper-focused {
+  .ant-input-affix-wrapper:focus-within,
+  .ant-input-affix-wrapper-focused,
+  .ant-input-number:focus-within,
+  .ant-input-number-focused,
+  .ant-picker:focus-within,
+  .ant-picker-focused,
+  .ant-select-focused .ant-select-selector {
     @apply !border-primary !shadow-[0_0_0_2px_rgba(102,126,234,0.1)];
+    outline: none !important;
   }
 
   /* Fix inline form alignment */

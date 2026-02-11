@@ -1,6 +1,6 @@
 import { Menu } from 'antd';
 import type { MenuProps } from 'antd';
-import { useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router';
 import { AppstoreOutlined } from '@ant-design/icons';
 import { IMenuItem } from '@app/interfaces/common.interface';
 import useThemeStore from '@app/store/useThemeStore';

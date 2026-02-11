@@ -1,5 +1,5 @@
 import { Breadcrumb } from 'antd';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router';
 import { getBreadcrumbItems } from '@app/configs/breadcrumb.config';
 import useThemeStore from '@app/store/useThemeStore';
 
