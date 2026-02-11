@@ -3,6 +3,7 @@ import loadable from '../../components/Loadable';
 
 const Login = loadable(() => import('./pages/login/Login'));
 const ForgotPassword = loadable(() => import('./pages/forgot-password/ForgotPassword'));
+const Register = loadable(() => import('./pages/register/Register'));
 
 export const Router: RouteObject = {
   path: '',
@@ -14,6 +15,10 @@ export const Router: RouteObject = {
     {
       path: 'forgotPassword',
       element: <ForgotPassword />
+    },
+    {
+      path: 'register',
+      element: <Register />
     }
   ]
 }
