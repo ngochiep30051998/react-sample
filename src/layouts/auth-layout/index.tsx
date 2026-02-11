@@ -1,15 +1,12 @@
-import { Fragment } from 'react';
 import { Outlet } from 'react-router-dom';
-
-// Components
-
+import './AuthLayout.scss';
 
 const AuthLayout = () => {
   return (
-    <Fragment>
+    <div className="auth-layout">
       <Outlet />
-    </Fragment>
+    </div>
   );
-}
+};
 
 export { AuthLayout };

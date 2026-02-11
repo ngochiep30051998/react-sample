@@ -1,4 +1,4 @@
-.login-page {
+.register-page {
   min-height: 100vh;
   display: flex;
   align-items: center;
@@ -33,7 +33,7 @@
   }
 }
 
-.login-card {
+.register-card {
   width: 100%;
   max-width: 440px;
   background: #fafbfc;
@@ -45,54 +45,32 @@
   z-index: 1;
 }
 
-.login-header {
+.register-header {
   margin-bottom: 28px;
   text-align: left;
 }
 
-.login-title {
+.register-title {
   margin-bottom: 6px !important;
   font-weight: 700 !important;
   color: #1e293b !important;
 }
 
-.login-subtitle {
+.register-subtitle {
   font-size: 14px;
   color: #64748b !important;
 }
 
-.login-input-icon {
+.register-input-icon {
   color: #94a3b8;
 }
 
-.login-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px !important;
-
-  .ant-form-item {
-    margin-bottom: 0 !important;
-  }
-}
-
-.login-forgot-link {
-  color: #3b82f6;
-  font-size: 14px;
-  text-decoration: none;
-
-  &:hover {
-    color: #2563eb;
-    text-decoration: underline;
-  }
-}
-
-.login-actions {
+.register-actions {
   margin-top: 0 !important;
   margin-bottom: 20px !important;
 }
 
-.login-btn {
+.register-btn {
   height: 44px !important;
   font-weight: 600 !important;
   font-size: 15px !important;
@@ -107,13 +85,13 @@
   }
 }
 
-.login-signup {
+.register-signin {
   text-align: center;
   margin-bottom: 24px;
   font-size: 14px;
 }
 
-.login-signup-link {
+.register-signin-link {
   color: #3b82f6;
   font-weight: 500;
   text-decoration: none;
@@ -124,13 +102,13 @@
   }
 }
 
-.login-social {
+.register-social {
   display: flex;
   flex-direction: column;
   gap: 12px;
 }
 
-.login-social-btn {
+.register-social-btn {
   height: 44px !important;
   font-size: 14px !important;
   border-radius: 10px !important;
@@ -153,8 +131,7 @@
   }
 }
 
-/* Ant Design form overrides */
-.login-card .ant-input-affix-wrapper {
+.register-card .ant-input-affix-wrapper {
   border-radius: 10px;
   border-color: #e2e8f0;
 
@@ -166,13 +143,13 @@
   }
 }
 
-.login-card .ant-form-item-label > label {
+.register-card .ant-form-item-label > label {
   font-weight: 500;
   color: #334155;
 }
 
 @media (max-width: 575px) {
-  .login-card {
+  .register-card {
     padding: 28px 24px 24px;
     max-width: 100%;
   }
