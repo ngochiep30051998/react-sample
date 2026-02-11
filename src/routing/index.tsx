@@ -1,7 +1,10 @@
-import { Outlet, RouterProvider, createBrowserRouter } from 'react-router-dom';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { RootBoundary } from "../components/RootBoundary";
 import MasterLayout from "../layouts/master-layout";
-import * as Home from '../modules/home';
+import * as Dashboard from '../modules/dashboard';
+import * as Users from '../modules/users';
+import * as Products from '../modules/products';
+import * as Orders from '../modules/orders';
 import * as Auth from '../modules/auth';
 import { Loading } from '../components/loading/Loading';
 // Guards
@@ -11,9 +14,7 @@ import { IMenuItem } from '../interfaces/common.interface';
 import { AuthLayout } from '@app/layouts/auth-layout';
 
 
-const modules = [
-    Home
-]
+const modules = [Dashboard, Users, Products, Orders];
 
 const router = createBrowserRouter([
     {

@@ -1,13 +1,14 @@
 import React from "react";
 
 export interface IMenuItem {
-    label: React.ReactNode,
-    key: React.Key,
-    icon?: React.ReactNode,
-    to?: string,
-    children?: IMenuItem[],
-    component?: React.ReactNode,
-    onClick?: () => void
+  label: React.ReactNode;
+  key: React.Key;
+  icon?: React.ReactNode;
+  to?: string;
+  children?: IMenuItem[];
+  component?: React.ReactNode;
+  onClick?: () => void;
+  permission?: string;
 }
 
 export interface IResponse<T>{

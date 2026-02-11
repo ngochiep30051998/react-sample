@@ -1,29 +1,39 @@
-import { IMenuItem } from "../interfaces/common.interface"
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { IMenuItem } from '../interfaces/common.interface';
+
 type Props = {
-    to: string;
-    label?: string;
-}
+  to: string;
+  label?: React.ReactNode;
+};
+
 function CustomLabel({ to, label }: Props) {
-    const { appId } = useParams();
-    return to ? <Link to={`/${appId}${to}` || ''} style={{ color: 'inherit' }}>{label}</Link> : label
+  return to ? (
+    <Link to={to} style={{ color: 'inherit' }}>
+      {label}
+    </Link>
+  ) : (
+    label
+  );
 }
+
 export function getItem(
-    label: React.ReactNode,
-    key: React.Key,
-    icon?: React.ReactNode,
-    to?: string,
-    children?: IMenuItem[],
-    component?: React.ReactNode,
-    onClick?: () => void
+  label: React.ReactNode,
+  key: React.Key,
+  icon?: React.ReactNode,
+  to?: string,
+  children?: IMenuItem[],
+  component?: React.ReactNode,
+  onClick?: () => void,
+  permission?: string
 ): IMenuItem {
-    return {
-        key,
-        icon,
-        children: children as IMenuItem[],
-        label: <CustomLabel to={to as string} label={label as string}/>,
-        to,
-        component,
-        onClick
-    };
+  return {
+    key,
+    icon,
+    children: children as IMenuItem[],
+    label: to ? <CustomLabel to={to} label={label} /> : label,
+    to,
+    component,
+    onClick,
+    permission,
+  };
 }
