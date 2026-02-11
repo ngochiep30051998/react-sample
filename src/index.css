@@ -54,21 +54,6 @@ svg {
     @apply !rounded-lg transition-all duration-200;
   }
 
-  /* Reset antd v6 outline-based focus ring for all input types */
-  .ant-input:focus,
-  .ant-input:focus-within,
-  .ant-input-affix-wrapper:focus,
-  .ant-input-affix-wrapper:focus-within,
-  .ant-input-affix-wrapper-focused,
-  .ant-input-number:focus-within,
-  .ant-input-number-focused,
-  .ant-picker:focus-within,
-  .ant-picker-focused,
-  .ant-select-focused .ant-select-selector {
-    @apply !border-primary !shadow-[0_0_0_2px_rgba(102,126,234,0.1)];
-    outline: none !important;
-  }
-
   /* Fix inline form alignment */
   .ant-form-inline .ant-form-item {
     @apply !mb-0;
@@ -136,4 +121,28 @@ svg {
 
 .sidebar-menu--dark.ant-menu-inline-collapsed .ant-menu-item-selected {
   background: linear-gradient(135deg, #434343 0%, #000000 100%) !important;
+}
+
+/*
+ * antd v6 focus ring overrides (outside @layer for maximum specificity).
+ * antd v6 uses outline + outline-offset for focus rings.
+ * We replace them with a custom border + box-shadow.
+ */
+.ant-input:focus,
+.ant-input:focus-visible,
+.ant-input:focus-within,
+.ant-input-affix-wrapper:focus,
+.ant-input-affix-wrapper:focus-visible,
+.ant-input-affix-wrapper:focus-within,
+.ant-input-affix-wrapper-focused,
+.ant-input-number:focus-within,
+.ant-input-number:focus-visible,
+.ant-input-number-focused,
+.ant-picker:focus-within,
+.ant-picker:focus-visible,
+.ant-picker-focused,
+.ant-select-focused .ant-select-selector {
+  border-color: #667eea !important;
+  box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.1) !important;
+  outline: none !important;
 }
