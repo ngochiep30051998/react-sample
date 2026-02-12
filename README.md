@@ -4,16 +4,16 @@ A modern React application built with TypeScript, Vite, and a comprehensive arch
 
 ## 🚀 Tech Stack
 
-- **Frontend Framework**: React 18 with TypeScript
-- **Build Tool**: Vite 5
-- **UI Framework**: Ant Design (antd)
-- **Routing**: React Router DOM 6
-- **State Management**: Zustand
+- **Frontend Framework**: React 19 with TypeScript
+- **Build Tool**: Vite 6
+- **UI Framework**: Ant Design 6 (antd)
+- **Routing**: React Router 7
+- **State Management**: Zustand 5
 - **HTTP Client**: Axios
-- **Code Splitting**: Loadable Components
+- **Code Splitting**: React.lazy + Suspense
 - **Date Handling**: Day.js
-- **Styling**: SCSS/CSS
-- **Linting**: ESLint with TypeScript rules
+- **Styling**: Tailwind CSS 4 + CSS
+- **Linting**: ESLint 9 (flat config) with TypeScript rules
 
 ## 📁 Project Structure
 
@@ -62,16 +62,17 @@ src/
 - Login/logout functionality with navigation
 
 ### 🛣️ Advanced Routing
-- Nested routing with React Router DOM
+- Nested routing with React Router 7
 - Module-based route organization
-- Lazy loading with code splitting
+- Lazy loading with React.lazy + Suspense
 - Error boundaries for route protection
 
 ### 🎨 UI & UX
-- Ant Design component library
+- Ant Design 6 component library
+- Tailwind CSS 4 utility-first styling
 - Responsive layouts (Auth & Master)
 - Loading states and full-screen loaders
-- SCSS styling support
+- Light/Dark theme support
 
 ### 🔧 State Management
 - Zustand for global state
@@ -169,9 +170,9 @@ The project uses Vite path aliases configured in `vite.config.ts`:
 - Local storage cache for persistence
 
 ### Styling
-- Use SCSS files alongside components
-- Follow BEM naming convention
-- Leverage Ant Design theme system
+- Use Tailwind CSS 4 utility classes
+- Leverage Ant Design 6 theme system with CSS variables
+- Custom CSS overrides for antd components in `index.css`
 
 ## 🔍 Code Quality
 
@@ -197,11 +198,68 @@ npm run build
 4. Run linting and tests
 5. Submit a pull request
 
+## 📋 Changelog
+
+### v2.0.0 — Major Dependencies Upgrade (2026-02-11)
+
+**Dependencies (Major)**
+
+| Package | Before | After | Notes |
+|---------|--------|-------|-------|
+| react | 18.2 | **19.x** | Functional components only, no breaking changes |
+| react-dom | 18.2 | **19.x** | Already used `createRoot` |
+| antd | 5.13 | **6.x** | CSS variables mode by default, React 19 native |
+| zustand | 4.5 | **5.x** | Same `create` + `persist` API |
+| react-router-dom | 6.20 | **react-router 7.x** | Package renamed, data router pattern preserved |
+
+**Dependencies (Minor/Patch)**
+
+| Package | Before | After |
+|---------|--------|-------|
+| axios | 1.6 | **1.x (latest)** |
+| dayjs | 1.11.10 | **1.11.x (latest)** |
+
+**DevDependencies (Major)**
+
+| Package | Before | After | Notes |
+|---------|--------|-------|-------|
+| vite | 5.0 | **6.x** | Updated browser targets |
+| tailwindcss | 3.4 | **4.x** | CSS-first config, `@tailwindcss/postcss` |
+| eslint | 8.55 | **9.x** | Migrated to flat config (`eslint.config.js`) |
+| typescript | 5.2 | **5.x (latest)** | |
+| eslint-plugin-react-hooks | 4.6 | **5.x** | Flat config support |
+| sass | 1.70 | **1.x (latest)** | |
+
+**Packages Removed**
+
+- `@loadable/component` — replaced with native `React.lazy` + `Suspense`
+- `@types/loadable__component` — no longer needed
+- `react-router-dom` — replaced by `react-router` (v7 unified package)
+- `autoprefixer` — built into Tailwind CSS 4
+- `@typescript-eslint/eslint-plugin` + `@typescript-eslint/parser` — replaced by `typescript-eslint`
+
+**Packages Added**
+
+- `@tailwindcss/postcss` — Tailwind CSS 4 PostCSS plugin
+- `@eslint/js`, `globals`, `typescript-eslint` — ESLint 9 flat config
+
+**Code Changes**
+
+- Rewrote `src/components/Loadable.tsx` to use `React.lazy` + `Suspense`
+- Changed all `react-router-dom` / `react-router` imports to `react-router` (15+ files)
+- Replaced deprecated `RouterProvider.fallbackElement` with `Suspense` wrapper
+- Migrated `@tailwind` directives to `@import "tailwindcss/"` (v4 CSS-first syntax)
+- Disabled Tailwind preflight via granular imports to preserve antd styling
+- Migrated `postcss.config.js` to use `@tailwindcss/postcss`
+- Migrated `.eslintrc.cjs` to `eslint.config.js` (ESLint 9 flat config)
+- Updated lint script (removed `--ext` flag, not needed in flat config)
+- Added antd v6 focus ring overrides (`outline: none`) for all input types
+
 ## 📄 License
 
 This project is public
 ## 👨‍💻 Author
 
 **Hiep Nguyen Ngoc**
-- Portfolio: https://hiepnn.petite-dev.com/
+- Portfolio: https://hiepnn.com/
 - LinkedIn: https://www.linkedin.com/in/hi%E1%BB%87p-nguy%E1%BB%85n-b89aa1189

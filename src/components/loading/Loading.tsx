@@ -1,17 +1,31 @@
-import React, { Fragment } from 'react';
+import { Fragment } from 'react';
 
-import './Loading.scss';
+const dotStyle: React.CSSProperties = {
+  display: 'inline-block',
+  width: 18,
+  height: 18,
+  margin: '0 5px',
+  borderRadius: '50%',
+  backgroundColor: '#667eea',
+  animation: 'bounceDelay 1.4s infinite ease-in-out both',
+};
 
 const Loading = () => {
   return (
     <Fragment>
-      <div className="loading-content">
-        <div></div>
-        <div></div>
-        <div></div>
+      <style>{`
+        @keyframes bounceDelay {
+          0%, 80%, 100% { transform: scale(0); }
+          40% { transform: scale(1); }
+        }
+      `}</style>
+      <div className="fixed z-[10051] top-[40%] left-1/2 -translate-x-1/2 text-center">
+        <div style={{ ...dotStyle, animationDelay: '-0.32s' }} />
+        <div style={{ ...dotStyle, animationDelay: '-0.16s' }} />
+        <div style={dotStyle} />
       </div>
     </Fragment>
   );
-}
+};
 
-export { Loading }
+export { Loading };

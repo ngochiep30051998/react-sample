@@ -1,9 +1,8 @@
-import { Outlet } from 'react-router-dom';
-import './AuthLayout.scss';
+import { Outlet } from 'react-router';
 
 const AuthLayout = () => {
   return (
-    <div className="auth-layout">
+    <div className="min-h-screen">
       <Outlet />
     </div>
   );
