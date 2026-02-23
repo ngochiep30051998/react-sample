@@ -1,15 +1,12 @@
-import cache from '@core/cache';
-import { LOCAL_USER_KEY } from '@configs/auth.config';
 import { getPermissionsForRoles } from '@configs/rbac.config';
+import useAuthStore from '@app/store/useAuthStore';
 import { IMenuItem } from '@app/interfaces/common.interface';
 
 function userHasPermission(permission: string | undefined): boolean {
   if (!permission) return true;
-  const userData = cache.getCache(LOCAL_USER_KEY)?.data;
-  const permissions = userData?.permissions as string[] | undefined;
-  const roles = userData?.roles as string[] | undefined;
+  const { roles, permissions } = useAuthStore.getState();
   if (permissions?.includes(permission)) return true;
-  if (roles) {
+  if (roles.length) {
     const rolePerms = getPermissionsForRoles(roles);
     return rolePerms.includes(permission);
   }

@@ -1,15 +1,13 @@
-import cache from '@core/cache';
-import { LOCAL_USER_KEY } from '@configs/auth.config';
 import { getPermissionsForRoles } from '@configs/rbac.config';
+import useAuthStore from '@app/store/useAuthStore';
 
 export function useHasPermission(permission: string): boolean {
-  const userData = cache.getCache(LOCAL_USER_KEY)?.data;
-  const permissions = userData?.permissions as string[] | undefined;
-  const roles = userData?.roles as string[] | undefined;
+  const roles = useAuthStore((s) => s.roles);
+  const permissions = useAuthStore((s) => s.permissions);
 
   if (!permission) return true;
   if (permissions?.includes(permission)) return true;
-  if (roles) {
+  if (roles.length) {
     const rolePerms = getPermissionsForRoles(roles);
     return rolePerms.includes(permission);
   }
