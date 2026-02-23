@@ -1,5 +1,5 @@
-import DashboardStats from '@app/components/organisms/DashboardStats';
-import DashboardCharts from '@app/components/organisms/DashboardCharts';
+import DashboardStats from '@organisms/DashboardStats';
+import DashboardCharts from '@organisms/DashboardCharts';
 import { chartData, dashboardStats } from '../mock';
 
 export default function Dashboard() {

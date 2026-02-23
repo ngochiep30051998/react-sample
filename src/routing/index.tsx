@@ -1,9 +1,9 @@
 import { RouterProvider, createBrowserRouter } from 'react-router';
 import { Suspense } from 'react';
-import { RouteErrorBoundary } from '@app/components/organisms/RouteErrorBoundary';
-import AdminTemplate from '@app/components/templates/AdminTemplate';
-import AuthTemplate from '@app/components/templates/AuthTemplate';
-import Spinner from '@app/components/atoms/Spinner';
+import { RouteErrorBoundary } from '@organisms/RouteErrorBoundary';
+import AdminTemplate from '@templates/AdminTemplate';
+import AuthTemplate from '@templates/AuthTemplate';
+import Spinner from '@atoms/Spinner';
 import * as Dashboard from '../modules/dashboard';
 import * as Users from '../modules/users';
 import * as Products from '../modules/products';

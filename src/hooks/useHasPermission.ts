@@ -1,6 +1,6 @@
-import cache from '@app/core/cache';
-import { LOCAL_USER_KEY } from '@app/configs/auth.config';
-import { getPermissionsForRoles } from '@app/configs/rbac.config';
+import cache from '@core/cache';
+import { LOCAL_USER_KEY } from '@configs/auth.config';
+import { getPermissionsForRoles } from '@configs/rbac.config';
 
 export function useHasPermission(permission: string): boolean {
   const userData = cache.getCache(LOCAL_USER_KEY)?.data;

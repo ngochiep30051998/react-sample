@@ -1,10 +1,12 @@
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
-import { Button, Checkbox, Form, Input, Typography } from 'antd';
+import { Form } from 'antd';
 import { Link } from 'react-router';
 import { FacebookIcon, GoogleIcon } from '@app/assets/icons';
-import OAuthButton from '@app/components/molecules/OAuthButton';
-
-const { Title, Text } = Typography;
+import AppButton from '@atoms/AppButton';
+import AppCheckbox from '@atoms/AppCheckbox';
+import AppInput from '@atoms/AppInput';
+import AppTypography from '@atoms/AppTypography';
+import OAuthButton from '@molecules/OAuthButton';
 
 export interface LoginFormValues {
   username: string;
@@ -22,10 +24,10 @@ export default function LoginForm({ onFinish, loading = false }: LoginFormProps)
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 p-6 box-border">
       <div className="w-full max-w-[440px] bg-white rounded-2xl shadow-[0_20px_60px_rgba(15,23,42,0.12)] p-10 animate-fade-in">
         <div className="mb-7">
-          <Title level={3} className="!mb-1 !font-bold !text-slate-800">
+          <AppTypography.Title level={3} className="!mb-1 !font-bold !text-slate-800">
             Welcome Back
-          </Title>
-          <Text type="secondary">Please enter your details</Text>
+          </AppTypography.Title>
+          <AppTypography.Text type="secondary">Please enter your details</AppTypography.Text>
         </div>
 
         <Form<LoginFormValues>
@@ -42,12 +44,11 @@ export default function LoginForm({ onFinish, loading = false }: LoginFormProps)
               { min: 3, message: 'Username must be at least 3 characters.' },
             ]}
           >
-            <Input
+            <AppInput
               size="large"
               prefix={<UserOutlined className="text-slate-400" />}
               placeholder="Enter your username..."
               autoComplete="username"
-              className="!rounded-xl"
             />
           </Form.Item>
 
@@ -59,7 +60,7 @@ export default function LoginForm({ onFinish, loading = false }: LoginFormProps)
               { min: 6, message: 'Password must be at least 6 characters.' },
             ]}
           >
-            <Input.Password
+            <AppInput.Password
               size="large"
               prefix={<LockOutlined className="text-slate-400" />}
               placeholder="Enter your password..."
@@ -71,7 +72,7 @@ export default function LoginForm({ onFinish, loading = false }: LoginFormProps)
           <Form.Item className="!mb-5">
             <div className="flex justify-between items-center">
               <Form.Item name="remember" valuePropName="checked" noStyle>
-                <Checkbox>Remember me</Checkbox>
+                <AppCheckbox>Remember me</AppCheckbox>
               </Form.Item>
               <Link
                 to="/forgotPassword"
@@ -83,7 +84,7 @@ export default function LoginForm({ onFinish, loading = false }: LoginFormProps)
           </Form.Item>
 
           <Form.Item className="!mb-5">
-            <Button
+            <AppButton
               type="primary"
               htmlType="submit"
               size="large"
@@ -92,11 +93,11 @@ export default function LoginForm({ onFinish, loading = false }: LoginFormProps)
               className="!h-11 !font-semibold !text-[15px] !rounded-xl"
             >
               Login
-            </Button>
+            </AppButton>
           </Form.Item>
 
           <div className="text-center mb-6 text-sm">
-            <Text type="secondary">Don&apos;t have an account?</Text>{' '}
+            <AppTypography.Text type="secondary">Don&apos;t have an account?</AppTypography.Text>{' '}
             <Link to="/register" className="text-primary font-medium no-underline hover:underline">
               Sign up now
             </Link>

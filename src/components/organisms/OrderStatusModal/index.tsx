@@ -1,5 +1,7 @@
 import { useState } from 'react';
-import { App, Modal, Select } from 'antd';
+import { App } from 'antd';
+import AppModal from '@atoms/AppModal';
+import AppSelect from '@atoms/AppSelect';
 import type { MockOrder } from '@app/mocks/orders.mock';
 import useOrderStore from '@app/modules/orders/hooks/useOrderStore';
 
@@ -34,26 +36,26 @@ export default function OrderStatusModal({ open, order, onClose }: OrderStatusMo
   };
 
   return (
-    <Modal
+    <AppModal
       title={`Update Status — ${order?.orderNo ?? ''}`}
       open={open}
       onOk={handleSubmit}
       onCancel={onClose}
       confirmLoading={saving}
-      destroyOnHidden
+      destroyOnClose
     >
       <div className="py-4">
         <p className="mb-2 text-sm text-slate-500">
           Current status: <strong>{order?.status}</strong>
         </p>
-        <Select
-          className="!w-full"
+        <AppSelect
+          className="!w-full !rounded-xl"
           placeholder="Select new status"
           value={status}
           onChange={setStatus}
           options={STATUS_OPTIONS}
         />
       </div>
-    </Modal>
+    </AppModal>
   );
 }

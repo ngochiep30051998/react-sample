@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import ThemeToggleBtn from '@app/components/molecules/ThemeToggleBtn';
+import ThemeToggleBtn from '@molecules/ThemeToggleBtn';
 
 const meta: Meta<typeof ThemeToggleBtn> = {
   title: 'Molecules/ThemeToggleBtn',

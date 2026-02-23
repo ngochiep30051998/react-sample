@@ -1,13 +1,13 @@
 import { useCallback, useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router';
+import { Link, useSearchParams } from 'react-router';
 import { App, Button } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { DownloadOutlined, PlusOutlined } from '@ant-design/icons';
-import FilterBar, { type FilterField } from '@app/components/organisms/FilterBar';
-import DataTable from '@app/components/organisms/DataTable';
-import UserFormModal from '@app/components/organisms/UserFormModal';
-import StatusTag from '@app/components/atoms/StatusTag';
-import ActionButtons from '@app/components/molecules/ActionButtons';
+import FilterBar, { type FilterField } from '@organisms/FilterBar';
+import DataTable from '@organisms/DataTable';
+import UserFormModal from '@organisms/UserFormModal';
+import StatusTag from '@atoms/StatusTag';
+import ActionButtons from '@molecules/ActionButtons';
 import { exportToExcel } from '@app/utils/export.utils';
 import type { MockUser } from '@app/mocks/users.mock';
 import useUserStore from '../hooks/useUserStore';
@@ -84,6 +84,9 @@ export default function UserList() {
         <ActionButtons
           onEdit={() => handleEdit(record.id)}
           onDelete={() => handleDelete(record.id)}
+          extraActions={
+            <Link to={`/users/${record.id}`}>View</Link>
+          }
         />
       ),
     },

@@ -20,7 +20,15 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
     "paths": {
-      "@app/*" : ["./src/*"]
+      "@app/*" : ["./src/*"],
+      "@atoms/*" : ["./src/components/atoms/*"],
+      "@molecules/*" : ["./src/components/molecules/*"],
+      "@organisms/*" : ["./src/components/organisms/*"],
+      "@templates/*" : ["./src/components/templates/*"],
+      "@utils/*" : ["./src/components/utils/*"],
+      "@configs/*" : ["./src/configs/*"],
+      "@contexts/*" : ["./src/contexts/*"],
+      "@core/*" : ["./src/core/*"],
     },
   },
   "include": ["src"],

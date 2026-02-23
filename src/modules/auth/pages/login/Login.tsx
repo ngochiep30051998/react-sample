@@ -1,10 +1,10 @@
-import cache from '@app/core/cache';
-import { LOCAL_USER_KEY } from '@app/configs/auth.config';
-import { getPermissionsForRoles, ROLES } from '@app/configs/rbac.config';
+import cache from '@core/cache';
+import { LOCAL_USER_KEY } from '@configs/auth.config';
+import { getPermissionsForRoles, ROLES } from '@configs/rbac.config';
 import { useNavigate } from 'react-router';
-import { sleep } from '@app/core/sleep';
-import { useLoading } from '@app/contexts/LoadingContext';
-import LoginForm, { type LoginFormValues } from '@app/components/organisms/LoginForm';
+import { sleep } from '@core/sleep';
+import { useLoading } from '@contexts/LoadingContext';
+import LoginForm, { type LoginFormValues } from '@organisms/LoginForm';
 
 const Login = () => {
   const navigate = useNavigate();

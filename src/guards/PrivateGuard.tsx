@@ -1,7 +1,7 @@
 import React, { Fragment, ReactElement, ReactNode } from 'react';
 import { Navigate } from 'react-router';
-import { LOCAL_USER_KEY } from '@app/configs/auth.config';
-import cache from '@app/core/cache';
+import { LOCAL_USER_KEY } from '@configs/auth.config';
+import cache from '@core/cache';
 
 type Props = {
   children: ReactNode | ReactElement;

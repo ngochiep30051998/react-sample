@@ -1,4 +1,4 @@
-import { sleep } from '@app/core/sleep';
+import { sleep } from '@core/sleep';
 import { MOCK_ORDERS, type MockOrder } from '@app/mocks/orders.mock';
 
 export interface OrderListParams {

@@ -1,14 +1,15 @@
-import cache from '@app/core/cache';
-import { LOCAL_USER_KEY } from '@app/configs/auth.config';
+import clsx from 'clsx';
+import cache from '@core/cache';
+import { LOCAL_USER_KEY } from '@configs/auth.config';
 import useThemeStore from '@app/store/useThemeStore';
 import { useMediaQuery } from '@app/hooks/useMediaQuery';
 import { MenuFoldOutlined, MenuUnfoldOutlined, DashboardOutlined, UserOutlined } from '@ant-design/icons';
-import { Button } from 'antd';
 import type { MenuProps } from 'antd';
+import AppButton from '@atoms/AppButton';
 import { useNavigate } from 'react-router';
-import UserDropdown from '@app/components/molecules/UserDropdown';
-import ThemeToggleBtn from '@app/components/molecules/ThemeToggleBtn';
-import NotificationBell from '@app/components/molecules/NotificationBell';
+import UserDropdown from '@molecules/UserDropdown';
+import ThemeToggleBtn from '@molecules/ThemeToggleBtn';
+import NotificationBell from '@molecules/NotificationBell';
 
 export default function AppHeader() {
   const navigate = useNavigate();
@@ -32,11 +33,13 @@ export default function AppHeader() {
 
   return (
     <div
-      className={`sticky top-0 z-50 flex items-center justify-between h-16 px-6 shadow-md ${
+      className={clsx(
+        'sticky top-0 z-50 flex items-center justify-between',
+        'h-16 px-6 shadow-md',
         isDark
           ? 'bg-gradient-to-r from-gray-800 to-gray-900'
           : 'bg-gradient-to-r from-primary to-accent'
-      }`}
+      )}
     >
       {/* Left */}
       <div className="flex items-center gap-4">
@@ -47,7 +50,7 @@ export default function AppHeader() {
           <DashboardOutlined className="text-2xl" />
           <span className="hidden md:inline">Admin Panel</span>
         </div>
-        <Button
+        <AppButton
           type="text"
           className="!text-white !text-lg !rounded-lg hover:!bg-white/15 transition-all"
           icon={isMobile ? <MenuUnfoldOutlined /> : menuDesktopOpen ? <MenuFoldOutlined /> : <MenuUnfoldOutlined />}

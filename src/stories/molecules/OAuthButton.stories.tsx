@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Space } from 'antd';
-import OAuthButton from '@app/components/molecules/OAuthButton';
+import OAuthButton from '@molecules/OAuthButton';
 import { GoogleIcon, FacebookIcon } from '@app/assets/icons';
 
 const meta: Meta<typeof OAuthButton> = {

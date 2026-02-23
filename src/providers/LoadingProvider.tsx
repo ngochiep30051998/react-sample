@@ -1,5 +1,5 @@
-import LoadingFullScreen from '@app/components/organisms/LoadingFullScreen';
-import { LoadingContext } from '@app/contexts/LoadingContext';
+import LoadingFullScreen from '@organisms/LoadingFullScreen';
+import { LoadingContext } from '@contexts/LoadingContext';
 import React, { useState } from 'react';
 type Props = {
     children: React.ReactNode

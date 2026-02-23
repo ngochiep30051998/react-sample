@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Space } from 'antd';
-import StatusTag from '@app/components/atoms/StatusTag';
+import StatusTag from '@atoms/StatusTag';
 
 const meta: Meta<typeof StatusTag> = {
   title: 'Atoms/StatusTag',

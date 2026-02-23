@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import DashboardCharts from '@app/components/organisms/DashboardCharts';
+import DashboardCharts from '@organisms/DashboardCharts';
 
 const weeklyData = [
   { name: 'Mon', users: 120, orders: 45 },

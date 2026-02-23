@@ -7,7 +7,7 @@ import {
   ShoppingOutlined,
   BellOutlined,
 } from '@ant-design/icons';
-import AppIcon from '@app/components/atoms/AppIcon';
+import AppIcon from '@atoms/AppIcon';
 
 const meta: Meta<typeof AppIcon> = {
   title: 'Atoms/AppIcon',

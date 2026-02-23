@@ -1,7 +1,8 @@
+import clsx from 'clsx';
 import { ReactNode, useCallback } from 'react';
 import { useSearchParams } from 'react-router';
-import { Table } from 'antd';
 import type { ColumnsType, TableProps } from 'antd/es/table';
+import AppTable from '@atoms/AppTable';
 
 export interface DataTableProps<T extends object> {
   /** Column definitions */
@@ -60,8 +61,19 @@ export default function DataTable<T extends object>({
   );
 
   return (
-    <div className={`bg-white rounded-2xl p-5 shadow-card border border-primary-100/30 ${className ?? ''}`}>
-      <Table<T>
+    <div
+      className={clsx(
+        'data-table-primary-header',
+        'bg-white rounded-2xl p-5 shadow-card',
+        'border border-primary-100/30',
+        '[&_.ant-table-thead_th]:!bg-primary',
+        '[&_.ant-table-thead_th]:!text-white',
+        '[&_.ant-table-thead_th]:!font-semibold',
+        '[&_.ant-table-thead_th]:!border-0',
+        className
+      )}
+    >
+      <AppTable<T>
         columns={columns}
         dataSource={dataSource}
         rowKey={rowKey}
