@@ -3,6 +3,9 @@ import type { DatePickerProps } from 'antd';
 
 const DEFAULT_CLASS = '!rounded-xl';
 
-export default function AppDatePicker({ className, ...rest }: DatePickerProps) {
+function AppDatePickerComponent({ className, ...rest }: DatePickerProps) {
   return <DatePicker className={`${DEFAULT_CLASS} ${className ?? ''}`.trim()} {...rest} />;
 }
+
+AppDatePickerComponent.RangePicker = DatePicker.RangePicker;
+export default AppDatePickerComponent;

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Space } from 'antd';
-import AppProgress from '@app/components/atoms/AppProgress';
+import AppProgress from '@atoms/AppProgress';
 
 const meta: Meta<typeof AppProgress> = {
   title: 'Atoms/AppProgress',

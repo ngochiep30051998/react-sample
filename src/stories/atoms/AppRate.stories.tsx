@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import AppRate from '@app/components/atoms/AppRate';
+import AppRate from '@atoms/AppRate';
 
 const meta: Meta<typeof AppRate> = {
   title: 'Atoms/AppRate',

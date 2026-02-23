@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import AppTypography from '@app/components/atoms/AppTypography';
+import AppTypography from '@atoms/AppTypography';
 
 const meta: Meta<typeof AppTypography> = {
   title: 'Atoms/AppTypography',

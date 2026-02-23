@@ -7,7 +7,7 @@ import {
   DashboardOutlined,
   ShoppingOutlined,
 } from '@ant-design/icons';
-import GradientAvatar from '@app/components/atoms/GradientAvatar';
+import GradientAvatar from '@atoms/GradientAvatar';
 
 const meta: Meta<typeof GradientAvatar> = {
   title: 'Atoms/GradientAvatar',

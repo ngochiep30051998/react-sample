@@ -1,6 +1,7 @@
-import { Col, Row } from 'antd';
 import { ArrowUpOutlined, ShoppingOutlined, UserOutlined, DollarOutlined, RiseOutlined } from '@ant-design/icons';
-import StatCard from '@app/components/molecules/StatCard';
+import AppCol from '@atoms/AppCol';
+import AppRow from '@atoms/AppRow';
+import StatCard from '@molecules/StatCard';
 
 interface DashboardStatsProps {
   totalUsers: number;
@@ -11,8 +12,8 @@ interface DashboardStatsProps {
 
 export default function DashboardStats({ totalUsers, totalOrders, revenue, growth }: DashboardStatsProps) {
   return (
-    <Row gutter={[20, 20]}>
-      <Col xs={24} sm={12} lg={6}>
+    <AppRow gutter={[20, 20]}>
+      <AppCol xs={24} sm={12} lg={6}>
         <StatCard
           title="Total Users"
           value={totalUsers}
@@ -20,16 +21,16 @@ export default function DashboardStats({ totalUsers, totalOrders, revenue, growt
           valueColor="#667eea"
           trend={growth}
         />
-      </Col>
-      <Col xs={24} sm={12} lg={6}>
+      </AppCol>
+      <AppCol xs={24} sm={12} lg={6}>
         <StatCard
           title="Total Orders"
           value={totalOrders}
           prefix={<ShoppingOutlined className="text-2xl text-emerald-500" />}
           valueColor="#10b981"
         />
-      </Col>
-      <Col xs={24} sm={12} lg={6}>
+      </AppCol>
+      <AppCol xs={24} sm={12} lg={6}>
         <StatCard
           title="Revenue"
           value={revenue}
@@ -41,8 +42,8 @@ export default function DashboardStats({ totalUsers, totalOrders, revenue, growt
             </span>
           }
         />
-      </Col>
-      <Col xs={24} sm={12} lg={6}>
+      </AppCol>
+      <AppCol xs={24} sm={12} lg={6}>
         <StatCard
           title="Growth Rate"
           value={growth}
@@ -50,7 +51,7 @@ export default function DashboardStats({ totalUsers, totalOrders, revenue, growt
           valueColor="#ec4899"
           suffix="%"
         />
-      </Col>
-    </Row>
+      </AppCol>
+    </AppRow>
   );
 }

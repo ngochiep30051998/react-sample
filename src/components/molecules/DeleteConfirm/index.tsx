@@ -1,5 +1,5 @@
 import { Button } from 'antd';
-import AppPopconfirm from '@app/components/atoms/AppPopconfirm';
+import AppPopconfirm from '@atoms/AppPopconfirm';
 
 interface DeleteConfirmProps {
   onConfirm: () => void | Promise<void>;

@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Space } from 'antd';
 import { Scope } from '@app/enums';
-import ScopeTag from '@app/components/atoms/ScopeTag';
+import ScopeTag from '@atoms/ScopeTag';
 
 const meta: Meta<typeof ScopeTag> = {
   title: 'Atoms/ScopeTag',

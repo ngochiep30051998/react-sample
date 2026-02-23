@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import AppColorPicker from '@app/components/atoms/AppColorPicker';
+import AppColorPicker from '@atoms/AppColorPicker';
 
 const meta: Meta<typeof AppColorPicker> = {
   title: 'Atoms/AppColorPicker',

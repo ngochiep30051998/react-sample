@@ -1,6 +1,6 @@
-import { Breadcrumb } from 'antd';
 import { Link, useLocation } from 'react-router';
-import { getBreadcrumbItems } from '@app/configs/breadcrumb.config';
+import AppBreadcrumbList from '@atoms/AppBreadcrumb';
+import { getBreadcrumbItems } from '@configs/breadcrumb.config';
 import useThemeStore from '@app/store/useThemeStore';
 
 export default function AppBreadcrumb() {
@@ -17,7 +17,7 @@ export default function AppBreadcrumb() {
 
   return (
     <div className={`mb-6 px-4 py-3 rounded-xl shadow-sm backdrop-blur-sm ${isDark ? 'bg-white/5' : 'bg-white/60'}`}>
-      <Breadcrumb items={breadcrumbItems} />
+      <AppBreadcrumbList items={breadcrumbItems} />
     </div>
   );
 }

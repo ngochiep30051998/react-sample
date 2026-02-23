@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { MemoryRouter } from 'react-router';
 import { Button } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
-import FilterBar, { type FilterField } from '@app/components/organisms/FilterBar';
+import FilterBar, { type FilterField } from '@organisms/FilterBar';
 
 const userFields: FilterField[] = [
   { name: 'q', type: 'input', placeholder: 'Search...', width: 200 },

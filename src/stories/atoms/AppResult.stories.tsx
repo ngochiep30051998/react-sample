@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import AppButton from '@app/components/atoms/AppButton';
-import AppResult from '@app/components/atoms/AppResult';
+import AppButton from '@atoms/AppButton';
+import AppResult from '@atoms/AppResult';
 
 const meta: Meta<typeof AppResult> = {
   title: 'Atoms/AppResult',

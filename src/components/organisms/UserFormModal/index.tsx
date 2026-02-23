@@ -1,5 +1,8 @@
 import { useEffect } from 'react';
-import { App, Form, Input, Modal, Select } from 'antd';
+import { App, Form } from 'antd';
+import AppInput from '@atoms/AppInput';
+import AppModal from '@atoms/AppModal';
+import AppSelect from '@atoms/AppSelect';
 import type { MockUser } from '@app/mocks/users.mock';
 import useUserStore from '@app/modules/users/hooks/useUserStore';
 
@@ -42,26 +45,26 @@ export default function UserFormModal({ open, editingId, onClose }: UserFormModa
   };
 
   return (
-    <Modal
+    <AppModal
       title={editingId ? 'Edit User' : 'Create User'}
       open={open}
       onOk={handleSubmit}
       onCancel={onClose}
       confirmLoading={saving}
-      destroyOnHidden
+      destroyOnClose
     >
       <Form form={form} layout="vertical" disabled={detailLoading}>
         <Form.Item name="username" label="Username" rules={[{ required: true }]}>
-          <Input />
+          <AppInput />
         </Form.Item>
         <Form.Item name="email" label="Email" rules={[{ required: true }, { type: 'email' }]}>
-          <Input />
+          <AppInput />
         </Form.Item>
         <Form.Item name="fullName" label="Full Name" rules={[{ required: true }]}>
-          <Input />
+          <AppInput />
         </Form.Item>
         <Form.Item name="status" label="Status" rules={[{ required: true }]}>
-          <Select
+          <AppSelect
             options={[
               { value: 'active', label: 'Active' },
               { value: 'inactive', label: 'Inactive' },
@@ -69,6 +72,6 @@ export default function UserFormModal({ open, editingId, onClose }: UserFormModa
           />
         </Form.Item>
       </Form>
-    </Modal>
+    </AppModal>
   );
 }

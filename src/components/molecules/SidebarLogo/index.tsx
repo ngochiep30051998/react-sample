@@ -1,5 +1,5 @@
 import { AppstoreOutlined } from '@ant-design/icons';
-import GradientAvatar from '@app/components/atoms/GradientAvatar';
+import GradientAvatar from '@atoms/GradientAvatar';
 import useThemeStore from '@app/store/useThemeStore';
 
 interface SidebarLogoProps {

@@ -1,4 +1,4 @@
-import { sleep } from '@app/core/sleep';
+import { sleep } from '@core/sleep';
 import { MOCK_PRODUCTS, type MockProduct } from '@app/mocks/products.mock';
 
 export interface ProductListParams {

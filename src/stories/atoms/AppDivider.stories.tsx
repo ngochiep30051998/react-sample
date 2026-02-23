@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import AppDivider from '@app/components/atoms/AppDivider';
+import AppDivider from '@atoms/AppDivider';
 
 const meta: Meta<typeof AppDivider> = {
   title: 'Atoms/AppDivider',

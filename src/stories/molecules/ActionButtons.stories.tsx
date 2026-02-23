@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import ActionButtons from '@app/components/molecules/ActionButtons';
+import ActionButtons from '@molecules/ActionButtons';
 
 const meta: Meta<typeof ActionButtons> = {
   title: 'Molecules/ActionButtons',

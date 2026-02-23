@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Space } from 'antd';
-import AppAlert from '@app/components/atoms/AppAlert';
+import AppAlert from '@atoms/AppAlert';
 
 const meta: Meta<typeof AppAlert> = {
   title: 'Atoms/AppAlert',

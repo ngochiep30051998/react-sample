@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import AppSteps from '@app/components/atoms/AppSteps';
+import AppSteps from '@atoms/AppSteps';
 
 const items = [
   { title: 'Finished', description: 'Step 1' },

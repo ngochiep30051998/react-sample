@@ -1,5 +1,5 @@
 import { RouteObject } from 'react-router';
-import loadable from '@app/components/utils/Loadable';
+import loadable from '@utils/Loadable';
 
 const Login = loadable(() => import('./pages/login/Login'));
 const ForgotPassword = loadable(() => import('./pages/forgot-password/ForgotPassword'));

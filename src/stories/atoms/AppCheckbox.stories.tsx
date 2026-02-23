@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import AppCheckbox from '@app/components/atoms/AppCheckbox';
+import AppCheckbox from '@atoms/AppCheckbox';
 
 const meta: Meta<typeof AppCheckbox> = {
   title: 'Atoms/AppCheckbox',

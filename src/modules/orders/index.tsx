@@ -1,6 +1,6 @@
 import { FileTextOutlined } from '@ant-design/icons';
 import { RouteObject } from 'react-router';
-import loadable from '@app/components/utils/Loadable';
+import loadable from '@utils/Loadable';
 import { IMenuItem } from '../../interfaces/common.interface';
 import { getItem } from '../../routing/menu';
 

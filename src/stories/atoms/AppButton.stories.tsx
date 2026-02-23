@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Space } from 'antd';
 import { PlusOutlined, DownloadOutlined } from '@ant-design/icons';
-import AppButton from '@app/components/atoms/AppButton';
+import AppButton from '@atoms/AppButton';
 
 const meta: Meta<typeof AppButton> = {
   title: 'Atoms/AppButton',

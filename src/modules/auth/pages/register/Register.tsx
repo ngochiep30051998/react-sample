@@ -1,9 +1,9 @@
 import { MailOutlined, LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Form, Input, Typography } from 'antd';
 import { FacebookIcon, GoogleIcon } from '@app/assets/icons';
-import cache from '@app/core/cache';
-import { LOCAL_USER_KEY } from '@app/configs/auth.config';
-import { getPermissionsForRoles, ROLES } from '@app/configs/rbac.config';
+import cache from '@core/cache';
+import { LOCAL_USER_KEY } from '@configs/auth.config';
+import { getPermissionsForRoles, ROLES } from '@configs/rbac.config';
 import { Link, useNavigate } from 'react-router';
 
 const { Title, Text } = Typography;

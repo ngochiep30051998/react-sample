@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import AppRadio from '@app/components/atoms/AppRadio';
+import AppRadio from '@atoms/AppRadio';
 import { Radio } from 'antd';
 
 const meta: Meta<typeof AppRadio> = {

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import AppSlider from '@app/components/atoms/AppSlider';
+import AppSlider from '@atoms/AppSlider';
 
 const meta: Meta<typeof AppSlider> = {
   title: 'Atoms/AppSlider',

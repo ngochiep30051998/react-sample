@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import AppSkeleton from '@app/components/atoms/AppSkeleton';
+import AppSkeleton from '@atoms/AppSkeleton';
 
 const meta: Meta<typeof AppSkeleton> = {
   title: 'Atoms/AppSkeleton',

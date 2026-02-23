@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import AppTabs from '@app/components/atoms/AppTabs';
+import AppTabs from '@atoms/AppTabs';
 
 const items = [
   { key: '1', label: 'Tab 1', children: 'Content 1' },

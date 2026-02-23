@@ -5,9 +5,9 @@ import useThemeStore from '@app/store/useThemeStore';
 import { useMediaQuery } from '@app/hooks/useMediaQuery';
 import { MenuItems } from '@app/routing';
 import { filterMenuByPermission } from '@app/utils/menu.utils';
-import AppHeader from '@app/components/organisms/AppHeader';
-import AppSidebar from '@app/components/organisms/AppSidebar';
-import AppBreadcrumb from '@app/components/organisms/AppBreadcrumb';
+import AppHeader from '@organisms/AppHeader';
+import AppSidebar from '@organisms/AppSidebar';
+import AppBreadcrumb from '@organisms/AppBreadcrumb';
 
 export default function AdminTemplate() {
   const { themeMode, mobileDrawerOpen, setMobileDrawerOpen } = useThemeStore();

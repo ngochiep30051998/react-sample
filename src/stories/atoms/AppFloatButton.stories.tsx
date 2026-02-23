@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import AppFloatButton from '@app/components/atoms/AppFloatButton';
+import AppFloatButton from '@atoms/AppFloatButton';
 import { CustomerServiceOutlined } from '@ant-design/icons';
 
 const meta: Meta<typeof AppFloatButton> = {

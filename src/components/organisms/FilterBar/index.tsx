@@ -1,7 +1,13 @@
 import { ReactNode, useCallback, useEffect } from 'react';
 import { useSearchParams } from 'react-router';
-import { Button, DatePicker, Form, Input, InputNumber, Select, Space } from 'antd';
+import { Form } from 'antd';
 import { SearchOutlined, ReloadOutlined } from '@ant-design/icons';
+import AppButton from '@atoms/AppButton';
+import AppDatePicker from '@atoms/AppDatePicker';
+import AppFlex from '@atoms/AppFlex';
+import AppInput from '@atoms/AppInput';
+import AppInputNumber from '@atoms/AppInputNumber';
+import AppSelect from '@atoms/AppSelect';
 
 /* ------------------------------------------------------------------ */
 /*  Field definitions                                                  */
@@ -138,15 +144,15 @@ export default function FilterBar({
 
     switch (field.type) {
       case 'input':
-        return <Input placeholder={field.placeholder} allowClear style={style} />;
+        return <AppInput placeholder={field.placeholder} allowClear style={style} />;
       case 'select':
-        return <Select placeholder={field.placeholder} allowClear style={style} options={field.options} />;
+        return <AppSelect placeholder={field.placeholder} allowClear style={style} options={field.options} />;
       case 'number':
-        return <InputNumber placeholder={field.placeholder} min={field.min} max={field.max} style={style} />;
+        return <AppInputNumber placeholder={field.placeholder} min={field.min} max={field.max} style={style} />;
       case 'date':
-        return <DatePicker placeholder={field.placeholder} style={style} />;
+        return <AppDatePicker placeholder={field.placeholder} style={style} />;
       case 'date-range':
-        return <DatePicker.RangePicker style={style} />;
+        return <AppDatePicker.RangePicker style={style} />;
       default:
         return null;
     }
@@ -164,18 +170,18 @@ export default function FilterBar({
 
           {(showSearch || showReset) && (
             <Form.Item className="!mb-0">
-              <Space size="small">
+              <AppFlex gap="small">
                 {showSearch && (
-                  <Button type="primary" htmlType="submit" icon={<SearchOutlined />}>
+                  <AppButton type="primary" htmlType="submit" icon={<SearchOutlined />}>
                     {searchText}
-                  </Button>
+                  </AppButton>
                 )}
                 {showReset && (
-                  <Button icon={<ReloadOutlined />} onClick={handleReset}>
+                  <AppButton icon={<ReloadOutlined />} onClick={handleReset}>
                     {resetText}
-                  </Button>
+                  </AppButton>
                 )}
-              </Space>
+              </AppFlex>
             </Form.Item>
           )}
         </Form>

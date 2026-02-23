@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import AppButton from '@app/components/atoms/AppButton';
-import AppPopconfirm from '@app/components/atoms/AppPopconfirm';
+import AppButton from '@atoms/AppButton';
+import AppPopconfirm from '@atoms/AppPopconfirm';
 
 const meta: Meta<typeof AppPopconfirm> = {
   title: 'Atoms/AppPopconfirm',

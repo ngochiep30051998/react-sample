@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import AppCard from '@app/components/atoms/AppCard';
+import AppCard from '@atoms/AppCard';
 
 const meta: Meta<typeof AppCard> = {
   title: 'Atoms/AppCard',

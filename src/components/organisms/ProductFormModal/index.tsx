@@ -1,5 +1,9 @@
 import { useEffect } from 'react';
-import { App, Form, Input, InputNumber, Modal, Select } from 'antd';
+import { App, Form } from 'antd';
+import AppInput from '@atoms/AppInput';
+import AppInputNumber from '@atoms/AppInputNumber';
+import AppModal from '@atoms/AppModal';
+import AppSelect from '@atoms/AppSelect';
 import type { MockProduct } from '@app/mocks/products.mock';
 import useProductStore from '@app/modules/products/hooks/useProductStore';
 
@@ -42,20 +46,20 @@ export default function ProductFormModal({ open, editingId, onClose }: ProductFo
   };
 
   return (
-    <Modal
+    <AppModal
       title={editingId ? 'Edit Product' : 'Create Product'}
       open={open}
       onOk={handleSubmit}
       onCancel={onClose}
       confirmLoading={saving}
-      destroyOnHidden
+      destroyOnClose
     >
       <Form form={form} layout="vertical" disabled={detailLoading}>
         <Form.Item name="name" label="Product Name" rules={[{ required: true }]}>
-          <Input />
+          <AppInput />
         </Form.Item>
         <Form.Item name="category" label="Category" rules={[{ required: true }]}>
-          <Select
+          <AppSelect
             options={['Laptops', 'Phones', 'Tablets', 'Accessories', 'Wearables'].map((c) => ({
               value: c,
               label: c,
@@ -63,13 +67,13 @@ export default function ProductFormModal({ open, editingId, onClose }: ProductFo
           />
         </Form.Item>
         <Form.Item name="price" label="Price ($)" rules={[{ required: true }]}>
-          <InputNumber min={0} className="!w-full" />
+          <AppInputNumber min={0} className="!w-full" />
         </Form.Item>
         <Form.Item name="stock" label="Stock" rules={[{ required: true }]}>
-          <InputNumber min={0} className="!w-full" />
+          <AppInputNumber min={0} className="!w-full" />
         </Form.Item>
         <Form.Item name="status" label="Status" rules={[{ required: true }]}>
-          <Select
+          <AppSelect
             options={[
               { value: 'in_stock', label: 'In Stock' },
               { value: 'out_of_stock', label: 'Out of Stock' },
@@ -77,6 +81,6 @@ export default function ProductFormModal({ open, editingId, onClose }: ProductFo
           />
         </Form.Item>
       </Form>
-    </Modal>
+    </AppModal>
   );
 }

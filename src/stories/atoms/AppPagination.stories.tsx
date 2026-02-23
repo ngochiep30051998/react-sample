@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import AppPagination from '@app/components/atoms/AppPagination';
+import AppPagination from '@atoms/AppPagination';
 
 const meta: Meta<typeof AppPagination> = {
   title: 'Atoms/AppPagination',

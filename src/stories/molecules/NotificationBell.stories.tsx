@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import NotificationBell from '@app/components/molecules/NotificationBell';
+import NotificationBell from '@molecules/NotificationBell';
 
 const meta: Meta<typeof NotificationBell> = {
   title: 'Molecules/NotificationBell',

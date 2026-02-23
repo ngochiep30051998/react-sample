@@ -6,7 +6,7 @@ import {
   DollarOutlined,
   RiseOutlined,
 } from '@ant-design/icons';
-import StatCard from '@app/components/molecules/StatCard';
+import StatCard from '@molecules/StatCard';
 
 const meta: Meta<typeof StatCard> = {
   title: 'Molecules/StatCard',

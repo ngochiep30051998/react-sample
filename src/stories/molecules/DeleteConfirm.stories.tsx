@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import DeleteConfirm from '@app/components/molecules/DeleteConfirm';
+import DeleteConfirm from '@molecules/DeleteConfirm';
 
 const meta: Meta<typeof DeleteConfirm> = {
   title: 'Molecules/DeleteConfirm',

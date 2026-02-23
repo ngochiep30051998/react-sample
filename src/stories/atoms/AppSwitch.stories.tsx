@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import AppSwitch from '@app/components/atoms/AppSwitch';
+import AppSwitch from '@atoms/AppSwitch';
 
 const meta: Meta<typeof AppSwitch> = {
   title: 'Atoms/AppSwitch',

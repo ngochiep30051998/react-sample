@@ -1,9 +1,9 @@
-import { Menu } from 'antd';
 import type { MenuProps } from 'antd';
+import AppMenu from '@atoms/AppMenu';
 import { useLocation } from 'react-router';
 import { IMenuItem } from '@app/interfaces/common.interface';
 import useThemeStore from '@app/store/useThemeStore';
-import SidebarLogo from '@app/components/molecules/SidebarLogo';
+import SidebarLogo from '@molecules/SidebarLogo';
 
 interface AppSidebarProps {
   menuItems: IMenuItem[];
@@ -53,7 +53,7 @@ export default function AppSidebar({ menuItems, onItemClick, forceExpanded }: Ap
       <SidebarLogo expanded={expanded} />
 
       <div className="flex-1 overflow-y-auto overflow-x-hidden py-2">
-        <Menu
+        <AppMenu
           mode="inline"
           selectedKeys={selectedKey ? [String(selectedKey)] : []}
           items={items}

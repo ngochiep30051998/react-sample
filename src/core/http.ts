@@ -1,8 +1,8 @@
 // import { useAuthStore } from "../stores/auth";
 import axios from "axios";
 import { transformReq } from "./helper";
-import cache from '@app/core/cache';
-import { LOCAL_USER_KEY } from "@app/configs/auth.config";
+import cache from '@core/cache';
+import { LOCAL_USER_KEY } from "@configs/auth.config";
 
 
 const HTTP = axios.create({

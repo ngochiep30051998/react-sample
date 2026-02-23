@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useState } from 'react';
-import AppButton from '@app/components/atoms/AppButton';
-import AppModal from '@app/components/atoms/AppModal';
+import AppButton from '@atoms/AppButton';
+import AppModal from '@atoms/AppModal';
 
 const meta: Meta<typeof AppModal> = {
   title: 'Atoms/AppModal',

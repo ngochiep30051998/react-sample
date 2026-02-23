@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { MemoryRouter } from 'react-router';
-import LoginForm from '@app/components/organisms/LoginForm';
+import LoginForm from '@organisms/LoginForm';
 
 const meta: Meta<typeof LoginForm> = {
   title: 'Organisms/LoginForm',

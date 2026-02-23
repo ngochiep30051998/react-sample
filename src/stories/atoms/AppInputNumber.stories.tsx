@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Space } from 'antd';
-import AppInputNumber from '@app/components/atoms/AppInputNumber';
+import AppInputNumber from '@atoms/AppInputNumber';
 
 const meta: Meta<typeof AppInputNumber> = {
   title: 'Atoms/AppInputNumber',

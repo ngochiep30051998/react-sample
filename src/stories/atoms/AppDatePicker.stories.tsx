@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Space } from 'antd';
-import AppDatePicker from '@app/components/atoms/AppDatePicker';
+import AppDatePicker from '@atoms/AppDatePicker';
 
 const meta: Meta<typeof AppDatePicker> = {
   title: 'Atoms/AppDatePicker',

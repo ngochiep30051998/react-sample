@@ -1,4 +1,4 @@
-import HTTP from "@app/core/http";
+import HTTP from "@core/http";
 import { ClientStore } from "@app/types/client.types";
 import { create } from "zustand";
 

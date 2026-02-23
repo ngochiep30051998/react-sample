@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import AppSegmented from '@app/components/atoms/AppSegmented';
+import AppSegmented from '@atoms/AppSegmented';
 
 const meta: Meta<typeof AppSegmented> = {
   title: 'Atoms/AppSegmented',

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import AppEmpty from '@app/components/atoms/AppEmpty';
+import AppEmpty from '@atoms/AppEmpty';
 
 const meta: Meta<typeof AppEmpty> = {
   title: 'Atoms/AppEmpty',

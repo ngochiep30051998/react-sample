@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Space } from 'antd';
-import AppSelect from '@app/components/atoms/AppSelect';
+import AppSelect from '@atoms/AppSelect';
 
 const options = [
   { value: 'active', label: 'Active' },

@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { MemoryRouter } from 'react-router';
 import type { ColumnsType } from 'antd/es/table';
-import DataTable from '@app/components/organisms/DataTable';
-import StatusTag from '@app/components/atoms/StatusTag';
-import ActionButtons from '@app/components/molecules/ActionButtons';
+import DataTable from '@organisms/DataTable';
+import StatusTag from '@atoms/StatusTag';
+import ActionButtons from '@molecules/ActionButtons';
 
 interface SampleRow {
   id: string;

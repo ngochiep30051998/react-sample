@@ -1,7 +1,7 @@
 import { ReactNode, useCallback } from 'react';
 import { useSearchParams } from 'react-router';
-import { Table } from 'antd';
 import type { ColumnsType, TableProps } from 'antd/es/table';
+import AppTable from '@atoms/AppTable';
 
 export interface DataTableProps<T extends object> {
   /** Column definitions */
@@ -61,7 +61,7 @@ export default function DataTable<T extends object>({
 
   return (
     <div className={`bg-white rounded-2xl p-5 shadow-card border border-primary-100/30 ${className ?? ''}`}>
-      <Table<T>
+      <AppTable<T>
         columns={columns}
         dataSource={dataSource}
         rowKey={rowKey}

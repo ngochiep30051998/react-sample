@@ -1,4 +1,4 @@
-import { sleep } from '@app/core/sleep';
+import { sleep } from '@core/sleep';
 import { MOCK_USERS, type MockUser } from '@app/mocks/users.mock';
 
 export interface UserListParams {

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import DashboardStats from '@app/components/organisms/DashboardStats';
+import DashboardStats from '@organisms/DashboardStats';
 
 const meta: Meta<typeof DashboardStats> = {
   title: 'Organisms/DashboardStats',
