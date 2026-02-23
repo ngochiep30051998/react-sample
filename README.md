@@ -214,6 +214,45 @@ Follow the Atomic Design hierarchy:
 5. All subsequent API calls include the `Bearer` token via Axios interceptor
 6. Logout clears the cache and redirects to `/login`
 
+## Role Based Access Control (RBAC)
+
+Access is controlled by **roles** and **permissions**. Roles are loaded from the backend (mock API) on login; permissions are derived from roles and stored in Zustand.
+
+### Roles & Permissions
+
+| Role    | Key      | Permissions |
+|---------|----------|-------------|
+| Admin   | `admin`  | Full access: dashboard, users (CRUD), products (CRUD), orders (view/edit/delete) |
+| Manager | `manager` | Dashboard, users (view/edit), products (view/edit), orders (view/edit) — no create/delete on users & products |
+| User    | `user`   | Dashboard, products (view), orders (view) only |
+
+Permission format: `resource:action` (e.g. `users:view`, `products:create`, `orders:delete`). Configuration lives in `src/configs/rbac.config.ts` (`ROLES`, `PERMISSIONS`, `ROLE_PERMISSIONS`, `getPermissionsForRoles`).
+
+### Flow
+
+1. **Login**: `Login` calls mock API `getRolesFromBackend(username)` → receives roles → `getPermissionsForRoles(roles)` → cache stores token/username, Zustand stores `roles` and `permissions`.
+2. **Refresh**: `PrivateGuard` runs `hydrateFromCache()` which derives roles from cached username (same mapping as backend) and sets permissions in the store.
+3. **Routes**: `PermissionGuard` wraps dashboard, users, products, orders routes and redirects to home if the user lacks the required permission.
+4. **Menu**: `AdminTemplate` filters menu items by permission via `filterMenuByPermission` so sidebar only shows allowed items.
+5. **Actions**: List pages and `ActionButtons` use `useHasPermission` / `useHasAnyPermission` to show/hide Add, Edit, Delete, View, Export by permission.
+
+### Key Files
+
+- **Config**: `src/configs/rbac.config.ts` — role/permission constants and `getPermissionsForRoles(roles)`.
+- **Auth store**: `src/store/useAuthStore.ts` — `roles`, `permissions`, `setRolesAndPermissions`, `clearRolesAndPermissions`, `hydrateFromCache`.
+- **Mock API**: `src/modules/auth/services/auth.service.ts` — `getRolesFromBackend(username)`, `getRolesForUsername(username)` (used by hydrate).
+- **Hooks**: `src/hooks/useHasPermission.ts` — `useHasPermission(permission)`, `useHasAnyPermission(permissions[])`.
+- **Guards**: `src/guards/PermissionGuard.tsx` — route-level permission check.
+- **Utils**: `src/utils/menu.utils.ts` — `filterMenuByPermission(menuItems)`.
+
+### Demo Logins
+
+Use these usernames on the login page (password arbitrary) to test roles:
+
+- `admin` — full access
+- `manager` — no user/product create/delete
+- Any other (e.g. `user`) — view-only dashboard, products, orders
+
 ## Configuration
 
 ### Path Aliases
