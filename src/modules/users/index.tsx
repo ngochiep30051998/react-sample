@@ -1,9 +1,10 @@
 import { UserOutlined } from '@ant-design/icons';
 import { RouteObject } from 'react-router';
 import loadable from '@utils/Loadable';
+import { PERMISSIONS } from '@configs/rbac.config';
 import { IMenuItem } from '../../interfaces/common.interface';
 import { getItem } from '../../routing/menu';
-import { PERMISSIONS } from '@configs/rbac.config';
+import { PermissionGuard } from '../../guards/PermissionGuard';
 
 const UserList = loadable(() => import('./pages/UserList'));
 const UserDetail = loadable(() => import('./pages/UserDetail'));
@@ -11,8 +12,22 @@ const UserDetail = loadable(() => import('./pages/UserDetail'));
 export const Router: RouteObject = {
   path: 'users',
   children: [
-    { index: true, element: <UserList /> },
-    { path: ':id', element: <UserDetail /> },
+    {
+      index: true,
+      element: (
+        <PermissionGuard permission={PERMISSIONS.USERS_VIEW}>
+          <UserList />
+        </PermissionGuard>
+      ),
+    },
+    {
+      path: ':id',
+      element: (
+        <PermissionGuard permission={PERMISSIONS.USERS_VIEW}>
+          <UserDetail />
+        </PermissionGuard>
+      ),
+    },
   ],
 };
 

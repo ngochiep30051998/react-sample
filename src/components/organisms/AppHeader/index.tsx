@@ -1,6 +1,7 @@
 import clsx from 'clsx';
 import cache from '@core/cache';
 import { LOCAL_USER_KEY } from '@configs/auth.config';
+import useAuthStore from '@app/store/useAuthStore';
 import useThemeStore from '@app/store/useThemeStore';
 import { useMediaQuery } from '@app/hooks/useMediaQuery';
 import { MenuFoldOutlined, MenuUnfoldOutlined, DashboardOutlined, UserOutlined } from '@ant-design/icons';
@@ -17,11 +18,13 @@ export default function AppHeader() {
   const isMobile = !useMediaQuery('(min-width: 992px)');
   const isDark = themeMode === 'dark';
 
-  const userData = cache.getCache(LOCAL_USER_KEY)?.data;
-  const username = userData?.username ?? 'User';
+  const cached = cache.getCache(LOCAL_USER_KEY)?.data;
+  const username = cached?.username ?? 'User';
+  const clearRolesAndPermissions = useAuthStore((s) => s.clearRolesAndPermissions);
 
   const handleLogout = () => {
     cache.remove(LOCAL_USER_KEY);
+    clearRolesAndPermissions();
     navigate('/login');
   };
 

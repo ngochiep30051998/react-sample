@@ -3,6 +3,7 @@ import { Button, Form, Input, Typography } from 'antd';
 import { FacebookIcon, GoogleIcon } from '@app/assets/icons';
 import cache from '@core/cache';
 import { LOCAL_USER_KEY } from '@configs/auth.config';
+import useAuthStore from '@app/store/useAuthStore';
 import { getPermissionsForRoles, ROLES } from '@configs/rbac.config';
 import { Link, useNavigate } from 'react-router';
 
@@ -19,6 +20,8 @@ const Register = () => {
   const navigate = useNavigate();
   const [form] = Form.useForm<RegisterFormValues>();
 
+  const setRolesAndPermissions = useAuthStore((s) => s.setRolesAndPermissions);
+
   const handleFinish = (values: RegisterFormValues) => {
     const roles = [ROLES.ADMIN];
     const permissions = getPermissionsForRoles(roles);
@@ -26,9 +29,8 @@ const Register = () => {
       token: 'demo-token',
       username: values.username,
       email: values.email,
-      roles,
-      permissions,
     });
+    setRolesAndPermissions(roles, permissions);
     navigate('/');
   };
 

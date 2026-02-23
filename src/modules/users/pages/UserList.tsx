@@ -1,8 +1,10 @@
 import { useCallback, useEffect, useState } from 'react';
-import { Link, useSearchParams } from 'react-router';
+import { useSearchParams } from 'react-router';
 import { App, Button } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { DownloadOutlined, PlusOutlined } from '@ant-design/icons';
+import { PERMISSIONS } from '@configs/rbac.config';
+import { useHasPermission, useHasAnyPermission } from '@app/hooks/useHasPermission';
 import FilterBar, { type FilterField } from '@organisms/FilterBar';
 import DataTable from '@organisms/DataTable';
 import UserFormModal from '@organisms/UserFormModal';
@@ -31,7 +33,17 @@ export default function UserList() {
   const [searchParams] = useSearchParams();
   const { data, total, loading, fetchList, remove } = useUserStore();
   const [modalOpen, setModalOpen] = useState(false);
+  const canEdit = useHasPermission(PERMISSIONS.USERS_EDIT);
+  const canDelete = useHasPermission(PERMISSIONS.USERS_DELETE);
   const [editingId, setEditingId] = useState<string | null>(null);
+
+  const canCreate = useHasPermission(PERMISSIONS.USERS_CREATE);
+  const canView = useHasPermission(PERMISSIONS.USERS_VIEW);
+  const hasAnyUserAction = useHasAnyPermission(
+    PERMISSIONS.USERS_EDIT,
+    PERMISSIONS.USERS_DELETE,
+    PERMISSIONS.USERS_VIEW
+  );
 
   const page = Number(searchParams.get('page')) || 1;
   const per_page = Number(searchParams.get('per_page')) || 10;
@@ -63,6 +75,8 @@ export default function UserList() {
   const handleModalClose = () => {
     setModalOpen(false);
     setEditingId(null);
+  const hasAnyUserAction = canEdit || canDelete || canView;
+
     load();
   };
 
@@ -77,19 +91,24 @@ export default function UserList() {
       render: (s: string) => <StatusTag status={s} />,
     },
     { title: 'Created', dataIndex: 'createdAt', key: 'createdAt' },
-    {
-      title: 'Actions',
-      key: 'actions',
-      render: (_, record) => (
-        <ActionButtons
-          onEdit={() => handleEdit(record.id)}
-          onDelete={() => handleDelete(record.id)}
-          extraActions={
-            <Link to={`/users/${record.id}`}>View</Link>
-          }
-        />
-      ),
-    },
+    ...(hasAnyUserAction
+      ? [
+          {
+            title: 'Actions',
+            key: 'actions',
+            render: (_: unknown, record: MockUser) => (
+              <ActionButtons
+                editPermission={PERMISSIONS.USERS_EDIT}
+                deletePermission={PERMISSIONS.USERS_DELETE}
+                viewPermission={PERMISSIONS.USERS_VIEW}
+                viewTo={`/users/${record.id}`}
+                onEdit={() => handleEdit(record.id)}
+                onDelete={() => handleDelete(record.id)}
+              />
+            ),
+          },
+        ]
+      : []),
   ];
 
   return (
@@ -98,24 +117,28 @@ export default function UserList() {
         fields={FILTER_FIELDS}
         actions={
           <>
-            <Button
-              type="primary"
-              icon={<PlusOutlined />}
-              onClick={() => {
-                setEditingId(null);
-                setModalOpen(true);
-              }}
-            >
-              Add User
-            </Button>
-            <Button
-              icon={<DownloadOutlined />}
-              onClick={() =>
-                exportToExcel(data, `users-${new Date().toISOString().slice(0, 10)}.xlsx`, 'Users')
-              }
-            >
-              Export Excel
-            </Button>
+            {canCreate && (
+              <Button
+                type="primary"
+                icon={<PlusOutlined />}
+                onClick={() => {
+                  setEditingId(null);
+                  setModalOpen(true);
+                }}
+              >
+                Add User
+              </Button>
+            )}
+            {canView && (
+              <Button
+                icon={<DownloadOutlined />}
+                onClick={() =>
+                  exportToExcel(data, `users-${new Date().toISOString().slice(0, 10)}.xlsx`, 'Users')
+                }
+              >
+                Export Excel
+              </Button>
+            )}
           </>
         }
       />

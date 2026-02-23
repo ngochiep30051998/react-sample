@@ -1,13 +1,11 @@
-// import { useAuthStore } from "../stores/auth";
 import axios from "axios";
 import { transformReq } from "./helper";
-import cache from '@core/cache';
+import cache from "@core/cache";
 import { LOCAL_USER_KEY } from "@configs/auth.config";
-
 
 const HTTP = axios.create({
   baseURL: `${import.meta.env.VITE_PUBLIC_API_URL}`
-})
+});
 
 HTTP.interceptors.request.use((req) => {
   const token = cache.getCache(LOCAL_USER_KEY)?.data?.token;

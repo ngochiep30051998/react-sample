@@ -1,8 +1,10 @@
 import { useCallback, useEffect, useState } from 'react';
-import { Link, useSearchParams } from 'react-router';
+import { useSearchParams } from 'react-router';
 import { App, Button } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { DownloadOutlined } from '@ant-design/icons';
+import { PERMISSIONS } from '@configs/rbac.config';
+import { useHasPermission, useHasAnyPermission } from '@app/hooks/useHasPermission';
 import FilterBar, { type FilterField } from '@organisms/FilterBar';
 import DataTable from '@organisms/DataTable';
 import OrderStatusModal from '@organisms/OrderStatusModal';
@@ -35,6 +37,13 @@ export default function OrderList() {
   const { data, total, loading, fetchList, remove } = useOrderStore();
   const [statusModalOpen, setStatusModalOpen] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState<MockOrder | null>(null);
+
+  const canView = useHasPermission(PERMISSIONS.ORDERS_VIEW);
+  const hasAnyOrderAction = useHasAnyPermission(
+    PERMISSIONS.ORDERS_EDIT,
+    PERMISSIONS.ORDERS_DELETE,
+    PERMISSIONS.ORDERS_VIEW
+  );
 
   const page = Number(searchParams.get('page')) || 1;
   const per_page = Number(searchParams.get('per_page')) || 10;
@@ -81,21 +90,25 @@ export default function OrderList() {
       render: (s: string) => <StatusTag status={s} />,
     },
     { title: 'Created', dataIndex: 'createdAt', key: 'createdAt' },
-    {
-      title: 'Actions',
-      key: 'actions',
-      render: (_, record) => (
-        <ActionButtons
-          onEdit={() => {
-            setSelectedOrder(record);
-            setStatusModalOpen(true);
-          }}
-          onDelete={() => handleDelete(record.id)}
-          editLabel="Update Status"
-          extraActions={<Link to={`/orders/${record.id}`}>View</Link>}
-        />
-      ),
-    },
+    ...(hasAnyOrderAction
+      ? [
+          {
+            title: 'Actions',
+            key: 'actions',
+            render: (_: unknown, record: MockOrder) => (
+              <ActionButtons
+                editPermission={PERMISSIONS.ORDERS_EDIT}
+                deletePermission={PERMISSIONS.ORDERS_DELETE}
+                viewPermission={PERMISSIONS.ORDERS_VIEW}
+                viewTo={`/orders/${record.id}`}
+                editLabel="Update Status"
+                onEdit={() => { setSelectedOrder(record); setStatusModalOpen(true); }}
+                onDelete={() => handleDelete(record.id)}
+              />
+            ),
+          },
+        ]
+      : []),
   ];
 
   return (
@@ -103,14 +116,16 @@ export default function OrderList() {
       <FilterBar
         fields={FILTER_FIELDS}
         actions={
-          <Button
-            icon={<DownloadOutlined />}
-            onClick={() =>
-              exportToExcel(data, `orders-${new Date().toISOString().slice(0, 10)}.xlsx`, 'Orders')
-            }
-          >
-            Export
-          </Button>
+          canView ? (
+            <Button
+              icon={<DownloadOutlined />}
+              onClick={() =>
+                exportToExcel(data, `orders-${new Date().toISOString().slice(0, 10)}.xlsx`, 'Orders')
+              }
+            >
+              Export
+            </Button>
+          ) : null
         }
       />
 

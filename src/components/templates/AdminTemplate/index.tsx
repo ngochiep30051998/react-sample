@@ -2,6 +2,7 @@ import clsx from 'clsx';
 import { Outlet } from 'react-router';
 import { App, ConfigProvider, Drawer, theme } from 'antd';
 import type { ThemeConfig } from 'antd';
+import useAuthStore from '@app/store/useAuthStore';
 import useThemeStore from '@app/store/useThemeStore';
 import { useMediaQuery } from '@app/hooks/useMediaQuery';
 import { MenuItems } from '@app/routing';
@@ -14,6 +15,9 @@ export default function AdminTemplate() {
   const { themeMode, mobileDrawerOpen, setMobileDrawerOpen } = useThemeStore();
   const isMobile = !useMediaQuery('(min-width: 992px)');
   const isDark = themeMode === 'dark';
+
+  useAuthStore((s) => s.permissions);
+  const filteredMenuItems = filterMenuByPermission(MenuItems);
 
   const themeConfig: ThemeConfig = {
     token: {
@@ -58,7 +62,7 @@ export default function AdminTemplate() {
                 width={280}
               >
                 <AppSidebar
-                  menuItems={filterMenuByPermission(MenuItems)}
+                  menuItems={filteredMenuItems}
                   onItemClick={() => setMobileDrawerOpen(false)}
                   forceExpanded
                 />
@@ -72,7 +76,7 @@ export default function AdminTemplate() {
                     : 'bg-white shadow-sidebar'
                 )}
               >
-                <AppSidebar menuItems={filterMenuByPermission(MenuItems)} />
+                <AppSidebar menuItems={filteredMenuItems} />
               </aside>
             )}
             <main

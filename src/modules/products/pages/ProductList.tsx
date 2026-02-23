@@ -1,8 +1,10 @@
 import { useCallback, useEffect, useState } from 'react';
-import { Link, useSearchParams } from 'react-router';
+import { useSearchParams } from 'react-router';
 import { App, Button, Tag } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { DownloadOutlined, PlusOutlined } from '@ant-design/icons';
+import { PERMISSIONS } from '@configs/rbac.config';
+import { useHasPermission, useHasAnyPermission } from '@app/hooks/useHasPermission';
 import FilterBar, { type FilterField } from '@organisms/FilterBar';
 import DataTable from '@organisms/DataTable';
 import ProductFormModal from '@organisms/ProductFormModal';
@@ -31,7 +33,17 @@ export default function ProductList() {
   const [searchParams] = useSearchParams();
   const { data, total, loading, fetchList, remove } = useProductStore();
   const [modalOpen, setModalOpen] = useState(false);
+  const canEdit = useHasPermission(PERMISSIONS.PRODUCTS_EDIT);
+  const canDelete = useHasPermission(PERMISSIONS.PRODUCTS_DELETE);
   const [editingId, setEditingId] = useState<string | null>(null);
+
+  const canCreate = useHasPermission(PERMISSIONS.PRODUCTS_CREATE);
+  const canView = useHasPermission(PERMISSIONS.PRODUCTS_VIEW);
+  const hasAnyProductAction = useHasAnyPermission(
+    PERMISSIONS.PRODUCTS_EDIT,
+    PERMISSIONS.PRODUCTS_DELETE,
+    PERMISSIONS.PRODUCTS_VIEW
+  );
 
   const page = Number(searchParams.get('page')) || 1;
   const per_page = Number(searchParams.get('per_page')) || 10;
@@ -52,6 +64,8 @@ export default function ProductList() {
       load();
     } else {
       message.error('Failed to delete');
+  const hasAnyProductAction = canEdit || canDelete || canView;
+
     }
   };
 
@@ -77,20 +91,24 @@ export default function ProductList() {
       render: (s: string) => <StatusTag status={s} />,
     },
     { title: 'Created', dataIndex: 'createdAt', key: 'createdAt' },
-    {
-      title: 'Actions',
-      key: 'actions',
-      render: (_, record) => (
-        <ActionButtons
-          onEdit={() => {
-            setEditingId(record.id);
-            setModalOpen(true);
-          }}
-          onDelete={() => handleDelete(record.id)}
-          extraActions={<Link to={`/products/${record.id}`}>View</Link>}
-        />
-      ),
-    },
+    ...(hasAnyProductAction
+      ? [
+          {
+            title: 'Actions',
+            key: 'actions',
+            render: (_: unknown, record: MockProduct) => (
+              <ActionButtons
+                editPermission={PERMISSIONS.PRODUCTS_EDIT}
+                deletePermission={PERMISSIONS.PRODUCTS_DELETE}
+                viewPermission={PERMISSIONS.PRODUCTS_VIEW}
+                viewTo={`/products/${record.id}`}
+                onEdit={() => { setEditingId(record.id); setModalOpen(true); }}
+                onDelete={() => handleDelete(record.id)}
+              />
+            ),
+          },
+        ]
+      : []),
   ];
 
   return (
@@ -99,28 +117,32 @@ export default function ProductList() {
         fields={FILTER_FIELDS}
         actions={
           <>
-            <Button
-              type="primary"
-              icon={<PlusOutlined />}
-              onClick={() => {
-                setEditingId(null);
-                setModalOpen(true);
-              }}
-            >
-              Add Product
-            </Button>
-            <Button
-              icon={<DownloadOutlined />}
-              onClick={() =>
-                exportToExcel(
-                  data,
-                  `products-${new Date().toISOString().slice(0, 10)}.xlsx`,
-                  'Products'
-                )
-              }
-            >
-              Export
-            </Button>
+            {canCreate && (
+              <Button
+                type="primary"
+                icon={<PlusOutlined />}
+                onClick={() => {
+                  setEditingId(null);
+                  setModalOpen(true);
+                }}
+              >
+                Add Product
+              </Button>
+            )}
+            {canView && (
+              <Button
+                icon={<DownloadOutlined />}
+                onClick={() =>
+                  exportToExcel(
+                    data,
+                    `products-${new Date().toISOString().slice(0, 10)}.xlsx`,
+                    'Products'
+                  )
+                }
+              >
+                Export
+              </Button>
+            )}
           </>
         }
       />
