@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import { Select } from 'antd';
 import type { SelectProps } from 'antd';
 
@@ -7,7 +8,7 @@ function AppSelectInner<ValueType = unknown>({ className, allowClear = true, ...
   return (
     <Select
       allowClear={allowClear}
-      className={`${DEFAULT_CLASS} ${className ?? ''}`.trim()}
+      className={clsx(DEFAULT_CLASS, className)}
       {...rest}
     />
   );

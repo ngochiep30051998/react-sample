@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router';
+import { Link, useSearchParams } from 'react-router';
 import { App, Button, Tag } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { DownloadOutlined, PlusOutlined } from '@ant-design/icons';
@@ -87,6 +87,7 @@ export default function ProductList() {
             setModalOpen(true);
           }}
           onDelete={() => handleDelete(record.id)}
+          extraActions={<Link to={`/products/${record.id}`}>View</Link>}
         />
       ),
     },

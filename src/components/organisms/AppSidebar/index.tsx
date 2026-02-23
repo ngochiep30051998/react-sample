@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import type { MenuProps } from 'antd';
 import AppMenu from '@atoms/AppMenu';
 import { useLocation } from 'react-router';
@@ -58,7 +59,10 @@ export default function AppSidebar({ menuItems, onItemClick, forceExpanded }: Ap
           selectedKeys={selectedKey ? [String(selectedKey)] : []}
           items={items}
           inlineCollapsed={!expanded}
-          className={`!border-r-0 !bg-transparent sidebar-menu ${isDark ? 'sidebar-menu--dark' : ''}`}
+          className={clsx(
+          '!border-r-0 !bg-transparent sidebar-menu',
+          isDark && 'sidebar-menu--dark'
+        )}
         />
       </div>
     </div>

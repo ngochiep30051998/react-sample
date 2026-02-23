@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import { Link, useLocation } from 'react-router';
 import AppBreadcrumbList from '@atoms/AppBreadcrumb';
 import { getBreadcrumbItems } from '@configs/breadcrumb.config';
@@ -16,7 +17,12 @@ export default function AppBreadcrumb() {
   if (breadcrumbItems.length === 0) return null;
 
   return (
-    <div className={`mb-6 px-4 py-3 rounded-xl shadow-sm backdrop-blur-sm ${isDark ? 'bg-white/5' : 'bg-white/60'}`}>
+    <div
+      className={clsx(
+        'mb-6 px-4 py-3 rounded-xl shadow-sm backdrop-blur-sm',
+        isDark ? 'bg-white/5' : 'bg-white/60'
+      )}
+    >
       <AppBreadcrumbList items={breadcrumbItems} />
     </div>
   );

@@ -13,13 +13,19 @@ interface OrderState {
   total: number;
   loading: boolean;
 
-  /** Detail / status update */
+  /** Detail */
+  detail: MockOrder | null;
+  detailLoading: boolean;
+
+  /** Status update */
   saving: boolean;
 
   /** Actions */
   fetchList: (params?: OrderListParams) => Promise<void>;
+  fetchById: (id: string) => Promise<MockOrder | null>;
   updateStatus: (id: string, status: MockOrder['status']) => Promise<MockOrder | null>;
   remove: (id: string) => Promise<boolean>;
+  resetDetail: () => void;
 }
 
 /* ------------------------------------------------------------------ */
@@ -30,6 +36,8 @@ const useOrderStore = create<OrderState>()((set) => ({
   data: [],
   total: 0,
   loading: false,
+  detail: null,
+  detailLoading: false,
   saving: false,
 
   fetchList: async (params) => {
@@ -39,6 +47,17 @@ const useOrderStore = create<OrderState>()((set) => ({
       set({ data: res.data, total: res.total });
     } finally {
       set({ loading: false });
+    }
+  },
+
+  fetchById: async (id) => {
+    set({ detailLoading: true });
+    try {
+      const order = await orderService.fetchOrderById(id);
+      set({ detail: order });
+      return order;
+    } finally {
+      set({ detailLoading: false });
     }
   },
 
@@ -56,6 +75,8 @@ const useOrderStore = create<OrderState>()((set) => ({
     const ok = await orderService.deleteOrder(id);
     return ok;
   },
+
+  resetDetail: () => set({ detail: null }),
 }));
 
 export default useOrderStore;

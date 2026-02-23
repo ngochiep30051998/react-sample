@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import { Outlet } from 'react-router';
 import { App, ConfigProvider, Drawer, theme } from 'antd';
 import type { ThemeConfig } from 'antd';
@@ -32,7 +33,12 @@ export default function AdminTemplate() {
     <ConfigProvider theme={themeConfig}>
       <App>
         <div
-          className={`flex flex-col min-h-screen ${isDark ? 'bg-[#0a0a0a]' : 'bg-gradient-to-br from-gray-50 to-gray-100'}`}
+          className={clsx(
+            'flex flex-col min-h-screen',
+            isDark
+              ? 'bg-[#0a0a0a]'
+              : 'bg-gradient-to-br from-gray-50 to-gray-100'
+          )}
         >
           <AppHeader />
           <div className="flex flex-1 overflow-hidden">
@@ -59,13 +65,23 @@ export default function AdminTemplate() {
               </Drawer>
             ) : (
               <aside
-                className={`shrink-0 transition-all duration-300 ${isDark ? 'bg-[#141414] shadow-[2px_0_16px_rgba(0,0,0,0.3)]' : 'bg-white shadow-sidebar'}`}
+                className={clsx(
+                  'shrink-0 transition-all duration-300',
+                  isDark
+                    ? 'bg-[#141414] shadow-[2px_0_16px_rgba(0,0,0,0.3)]'
+                    : 'bg-white shadow-sidebar'
+                )}
               >
                 <AppSidebar menuItems={filterMenuByPermission(MenuItems)} />
               </aside>
             )}
             <main
-              className={`flex-1 overflow-auto p-4 md:p-8 ${isDark ? 'bg-gradient-to-br from-[#0f0f0f] to-[#1a1a1a]' : 'bg-gradient-to-br from-gray-50 to-gray-100'}`}
+              className={clsx(
+                'flex-1 overflow-auto p-4 md:p-8',
+                isDark
+                  ? 'bg-gradient-to-br from-[#0f0f0f] to-[#1a1a1a]'
+                  : 'bg-gradient-to-br from-gray-50 to-gray-100'
+              )}
             >
               <AppBreadcrumb />
               <Outlet />

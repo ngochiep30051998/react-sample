@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import { Segmented } from 'antd';
 import type { SegmentedProps } from 'antd';
 
@@ -7,5 +8,5 @@ export default function AppSegmented<ValueType = string>({
   className,
   ...rest
 }: SegmentedProps<ValueType>) {
-  return <Segmented className={`${DEFAULT_CLASS} ${className ?? ''}`.trim()} {...rest} />;
+  return <Segmented className={clsx(DEFAULT_CLASS, className)} {...rest} />;
 }

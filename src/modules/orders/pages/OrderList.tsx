@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router';
+import { Link, useSearchParams } from 'react-router';
 import { App, Button } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { DownloadOutlined } from '@ant-design/icons';
@@ -92,6 +92,7 @@ export default function OrderList() {
           }}
           onDelete={() => handleDelete(record.id)}
           editLabel="Update Status"
+          extraActions={<Link to={`/orders/${record.id}`}>View</Link>}
         />
       ),
     },

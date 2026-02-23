@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import { Cascader } from 'antd';
 import type { CascaderProps } from 'antd';
 
@@ -7,5 +8,5 @@ export default function AppCascader<OptionType = unknown>({
   className,
   ...rest
 }: CascaderProps<OptionType>) {
-  return <Cascader className={`${DEFAULT_CLASS} ${className ?? ''}`.trim()} {...rest} />;
+  return <Cascader className={clsx(DEFAULT_CLASS, className)} {...rest} />;
 }

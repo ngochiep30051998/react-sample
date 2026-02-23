@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import cache from '@core/cache';
 import { LOCAL_USER_KEY } from '@configs/auth.config';
 import useThemeStore from '@app/store/useThemeStore';
@@ -32,11 +33,13 @@ export default function AppHeader() {
 
   return (
     <div
-      className={`sticky top-0 z-50 flex items-center justify-between h-16 px-6 shadow-md ${
+      className={clsx(
+        'sticky top-0 z-50 flex items-center justify-between',
+        'h-16 px-6 shadow-md',
         isDark
           ? 'bg-gradient-to-r from-gray-800 to-gray-900'
           : 'bg-gradient-to-r from-primary to-accent'
-      }`}
+      )}
     >
       {/* Left */}
       <div className="flex items-center gap-4">

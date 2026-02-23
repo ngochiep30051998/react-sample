@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import { Upload } from 'antd';
 import type { UploadProps } from 'antd';
 import { InboxOutlined } from '@ant-design/icons';
@@ -6,7 +7,7 @@ const { Dragger } = Upload;
 const DEFAULT_CLASS = 'rounded-xl';
 
 export default function AppUpload({ className, ...rest }: UploadProps) {
-  return <Upload className={`${DEFAULT_CLASS} ${className ?? ''}`.trim()} {...rest} />;
+  return <Upload className={clsx(DEFAULT_CLASS, className)} {...rest} />;
 }
 
 export function AppUploadDragger({
@@ -14,7 +15,7 @@ export function AppUploadDragger({
   ...rest
 }: Omit<UploadProps, 'children'> & { children?: React.ReactNode }) {
   return (
-    <Dragger className={`${DEFAULT_CLASS} ${className ?? ''}`.trim()} {...rest}>
+    <Dragger className={clsx(DEFAULT_CLASS, className)} {...rest}>
       {rest.children ?? (
         <>
           <p className="ant-upload-drag-icon">

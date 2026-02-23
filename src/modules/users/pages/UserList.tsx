@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router';
+import { Link, useSearchParams } from 'react-router';
 import { App, Button } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { DownloadOutlined, PlusOutlined } from '@ant-design/icons';
@@ -84,6 +84,9 @@ export default function UserList() {
         <ActionButtons
           onEdit={() => handleEdit(record.id)}
           onDelete={() => handleDelete(record.id)}
+          extraActions={
+            <Link to={`/users/${record.id}`}>View</Link>
+          }
         />
       ),
     },

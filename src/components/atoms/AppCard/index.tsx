@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import { Card } from 'antd';
 import type { CardProps } from 'antd';
 
@@ -11,7 +12,7 @@ export default function AppCard({
   return (
     <Card
       hoverable={hoverable}
-      className={`${DEFAULT_CLASS} ${className ?? ''}`.trim()}
+      className={clsx(DEFAULT_CLASS, className)}
       {...rest}
     />
   );

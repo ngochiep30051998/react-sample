@@ -6,14 +6,13 @@ import { getItem } from '../../routing/menu';
 import { PERMISSIONS } from '@configs/rbac.config';
 
 const UserList = loadable(() => import('./pages/UserList'));
+const UserDetail = loadable(() => import('./pages/UserDetail'));
 
 export const Router: RouteObject = {
   path: 'users',
   children: [
-    {
-      index: true,
-      element: <UserList />,
-    },
+    { index: true, element: <UserList /> },
+    { path: ':id', element: <UserDetail /> },
   ],
 };
 

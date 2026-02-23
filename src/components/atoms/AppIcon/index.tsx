@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import { ReactNode } from 'react';
 
 interface AppIconProps {
@@ -10,7 +11,10 @@ interface AppIconProps {
 export default function AppIcon({ icon, size = 16, color, className }: AppIconProps) {
   return (
     <span
-      className={`inline-flex items-center justify-center ${className ?? ''}`}
+      className={clsx(
+        'inline-flex items-center justify-center',
+        className
+      )}
       style={{ fontSize: size, color }}
     >
       {icon}

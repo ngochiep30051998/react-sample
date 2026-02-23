@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import { AutoComplete } from 'antd';
 import type { AutoCompleteProps } from 'antd';
 
@@ -7,5 +8,5 @@ export default function AppAutoComplete<OptionType = unknown>({
   className,
   ...rest
 }: AutoCompleteProps<OptionType>) {
-  return <AutoComplete className={`${DEFAULT_CLASS} ${className ?? ''}`.trim()} {...rest} />;
+  return <AutoComplete className={clsx(DEFAULT_CLASS, className)} {...rest} />;
 }

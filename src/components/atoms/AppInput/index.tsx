@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import { Input } from 'antd';
 import type { InputProps } from 'antd';
 
@@ -7,7 +8,7 @@ function AppInput({ className, allowClear = true, ...rest }: InputProps) {
   return (
     <Input
       allowClear={allowClear}
-      className={`${DEFAULT_CLASS} ${className ?? ''}`.trim()}
+      className={clsx(DEFAULT_CLASS, className)}
       {...rest}
     />
   );

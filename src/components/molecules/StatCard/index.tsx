@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import { ReactNode } from 'react';
 import { Card, Statistic } from 'antd';
 import { ArrowUpOutlined, ArrowDownOutlined } from '@ant-design/icons';
@@ -14,7 +15,12 @@ interface StatCardProps {
 
 export default function StatCard({ title, value, prefix, valueColor, trend, suffix, hoverable = true }: StatCardProps) {
   const trendSuffix = trend !== undefined ? (
-    <span className={`text-xs font-medium ${trend >= 0 ? 'text-emerald-500' : 'text-red-500'}`}>
+    <span
+        className={clsx(
+          'text-xs font-medium',
+          trend >= 0 ? 'text-emerald-500' : 'text-red-500'
+        )}
+      >
       {trend >= 0 ? <ArrowUpOutlined /> : <ArrowDownOutlined />} {Math.abs(trend)}%
     </span>
   ) : undefined;

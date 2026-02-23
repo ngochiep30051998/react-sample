@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import { ReactNode, useCallback, useEffect } from 'react';
 import { useSearchParams } from 'react-router';
 import { Form } from 'antd';
@@ -159,7 +160,13 @@ export default function FilterBar({
   };
 
   return (
-    <div className={`bg-white rounded-xl p-4 mb-5 shadow-card border border-primary-100/30 ${className ?? ''}`}>
+    <div
+      className={clsx(
+        'bg-white rounded-xl p-4 mb-5 shadow-card',
+        'border border-primary-100/30',
+        className
+      )}
+    >
       <div className="flex items-center flex-wrap gap-3">
         <Form form={form} layout="inline" size="middle" onFinish={handleSearch}>
           {fields.map((field) => (
