@@ -1,4 +1,4 @@
-import LoadingFullScreen from '@app/components/LoadingFullScreen';
+import LoadingFullScreen from '@app/components/organisms/LoadingFullScreen';
 import { LoadingContext } from '@app/contexts/LoadingContext';
 import React, { useState } from 'react';
 type Props = {

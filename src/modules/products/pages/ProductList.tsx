@@ -1,20 +1,28 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router';
-import { App, Button, Space, Tag } from 'antd';
+import { App, Button, Tag } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { DownloadOutlined, PlusOutlined } from '@ant-design/icons';
-import BaseFilter, { type FilterField } from '@app/components/BaseFilter';
-import BaseTable from '@app/components/BaseTable';
+import FilterBar, { type FilterField } from '@app/components/organisms/FilterBar';
+import DataTable from '@app/components/organisms/DataTable';
+import ProductFormModal from '@app/components/organisms/ProductFormModal';
+import StatusTag from '@app/components/atoms/StatusTag';
+import ActionButtons from '@app/components/molecules/ActionButtons';
 import { exportToExcel } from '@app/utils/export.utils';
 import type { MockProduct } from '@app/mocks/products.mock';
 import useProductStore from '../hooks/useProductStore';
-import ProductFormModal from './ProductFormModal';
 
 const FILTER_FIELDS: FilterField[] = [
   { name: 'q', type: 'input', placeholder: 'Search products...', width: 200 },
   {
-    name: 'category', type: 'select', placeholder: 'Category', width: 140,
-    options: ['Laptops', 'Phones', 'Tablets', 'Accessories', 'Wearables'].map((c) => ({ value: c, label: c })),
+    name: 'category',
+    type: 'select',
+    placeholder: 'Category',
+    width: 140,
+    options: ['Laptops', 'Phones', 'Tablets', 'Accessories', 'Wearables'].map((c) => ({
+      value: c,
+      label: c,
+    })),
   },
 ];
 
@@ -34,48 +42,106 @@ export default function ProductList() {
     fetchList({ page, per_page, q, category });
   }, [fetchList, page, per_page, q, category]);
 
-  useEffect(() => { load(); }, [load]);
+  useEffect(() => {
+    load();
+  }, [load]);
 
   const handleDelete = async (id: string) => {
-    if (await remove(id)) { message.success('Product deleted'); load(); }
-    else message.error('Failed to delete');
+    if (await remove(id)) {
+      message.success('Product deleted');
+      load();
+    } else {
+      message.error('Failed to delete');
+    }
   };
 
   const columns: ColumnsType<MockProduct> = [
     { title: 'Name', dataIndex: 'name', key: 'name' },
-    { title: 'Category', dataIndex: 'category', key: 'category', render: (c: string) => <Tag>{c}</Tag> },
-    { title: 'Price', dataIndex: 'price', key: 'price', render: (p: number) => `$${p.toLocaleString()}` },
+    {
+      title: 'Category',
+      dataIndex: 'category',
+      key: 'category',
+      render: (c: string) => <Tag>{c}</Tag>,
+    },
+    {
+      title: 'Price',
+      dataIndex: 'price',
+      key: 'price',
+      render: (p: number) => `$${p.toLocaleString()}`,
+    },
     { title: 'Stock', dataIndex: 'stock', key: 'stock' },
     {
-      title: 'Status', dataIndex: 'status', key: 'status',
-      render: (s: string) => <Tag color={s === 'in_stock' ? 'green' : 'volcano'}>{s === 'in_stock' ? 'In Stock' : 'Out of Stock'}</Tag>,
+      title: 'Status',
+      dataIndex: 'status',
+      key: 'status',
+      render: (s: string) => <StatusTag status={s} />,
     },
     { title: 'Created', dataIndex: 'createdAt', key: 'createdAt' },
     {
-      title: 'Actions', key: 'actions',
+      title: 'Actions',
+      key: 'actions',
       render: (_, record) => (
-        <Space>
-          <Button type="link" size="small" onClick={() => { setEditingId(record.id); setModalOpen(true); }}>Edit</Button>
-          <Button type="link" size="small" danger onClick={() => handleDelete(record.id)}>Delete</Button>
-        </Space>
+        <ActionButtons
+          onEdit={() => {
+            setEditingId(record.id);
+            setModalOpen(true);
+          }}
+          onDelete={() => handleDelete(record.id)}
+        />
       ),
     },
   ];
 
   return (
     <div className="animate-fade-in">
-      <BaseFilter
+      <FilterBar
         fields={FILTER_FIELDS}
         actions={
           <>
-            <Button type="primary" icon={<PlusOutlined />} onClick={() => { setEditingId(null); setModalOpen(true); }}>Add Product</Button>
-            <Button icon={<DownloadOutlined />} onClick={() => exportToExcel(data, `products-${new Date().toISOString().slice(0, 10)}.xlsx`, 'Products')}>Export</Button>
+            <Button
+              type="primary"
+              icon={<PlusOutlined />}
+              onClick={() => {
+                setEditingId(null);
+                setModalOpen(true);
+              }}
+            >
+              Add Product
+            </Button>
+            <Button
+              icon={<DownloadOutlined />}
+              onClick={() =>
+                exportToExcel(
+                  data,
+                  `products-${new Date().toISOString().slice(0, 10)}.xlsx`,
+                  'Products'
+                )
+              }
+            >
+              Export
+            </Button>
           </>
         }
       />
 
-      <BaseTable<MockProduct> columns={columns} dataSource={data} rowKey="id" loading={loading} total={total} showTotal={(t) => `Total ${t} products`} />
-      <ProductFormModal open={modalOpen} editingId={editingId} onClose={() => { setModalOpen(false); setEditingId(null); load(); }} />
+      <DataTable<MockProduct>
+        columns={columns}
+        dataSource={data}
+        rowKey="id"
+        loading={loading}
+        total={total}
+        showTotal={(t) => `Total ${t} products`}
+      />
+
+      <ProductFormModal
+        open={modalOpen}
+        editingId={editingId}
+        onClose={() => {
+          setModalOpen(false);
+          setEditingId(null);
+          load();
+        }}
+      />
     </div>
   );
 }

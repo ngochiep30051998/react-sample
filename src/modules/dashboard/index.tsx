@@ -1,6 +1,6 @@
 import { DashboardOutlined } from '@ant-design/icons';
 import { RouteObject } from 'react-router';
-import loadable from '../../components/Loadable';
+import loadable from '@app/components/utils/Loadable';
 import { IMenuItem } from '../../interfaces/common.interface';
 import { getItem } from '../../routing/menu';
 
@@ -15,7 +15,6 @@ export const Router: RouteObject = {
     },
   ],
 };
-
 
 export const MenuItems: IMenuItem[] = [
   getItem('Dashboard', 'dashboard', <DashboardOutlined />, '/', undefined, undefined, undefined, 'dashboard:view'),

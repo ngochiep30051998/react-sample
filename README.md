@@ -1,8 +1,8 @@
 # React Sample Project
 
-A modern React application built with TypeScript, Vite, and a comprehensive architecture featuring authentication, routing, and state management.
+A modern React admin dashboard built with TypeScript, Vite, and **Atomic Design** architecture.
 
-## 🚀 Tech Stack
+## Tech Stack
 
 - **Frontend Framework**: React 19 with TypeScript
 - **Build Tool**: Vite 6
@@ -12,101 +12,150 @@ A modern React application built with TypeScript, Vite, and a comprehensive arch
 - **HTTP Client**: Axios
 - **Code Splitting**: React.lazy + Suspense
 - **Date Handling**: Day.js
-- **Styling**: Tailwind CSS 4 + CSS
+- **Styling**: Tailwind CSS 4 + Sass
 - **Linting**: ESLint 9 (flat config) with TypeScript rules
 
-## 📁 Project Structure
+## Atomic Design Architecture
+
+This project follows the [Atomic Design](https://bradfrost.com/blog/post/atomic-web-design/) methodology by Brad Frost. The UI is organized into 5 hierarchical levels.
+
+### Component Hierarchy
+
+```
+src/components/
+├── atoms/          ← Primitive UI elements (no business logic)
+├── molecules/      ← Compositions of atoms forming functional units
+├── organisms/      ← Complex, reusable sections (may use hooks/context)
+├── templates/      ← Page layout shells (contain <Outlet />)
+└── utils/          ← Non-visual utilities (Loadable, RootBoundary, etc.)
+```
+
+### Atoms — `src/components/atoms/`
+
+Smallest building blocks that wrap Ant Design primitives with project-level defaults.
+
+| Component | Description |
+|-----------|-------------|
+| `StatusTag` | Colored `<Tag>` for status values (`active`, `inactive`, `pending`, etc.) |
+| `GradientAvatar` | Icon inside a gradient box (used in Sidebar logo, stat cards) |
+| `Spinner` | Bouncing-dots loading indicator for lazy-loaded routes |
+| `AppIcon` | Standardized icon wrapper with size and color props |
+
+### Molecules — `src/components/molecules/`
+
+Combinations of atoms that form a self-contained UI unit. Still "dumb" — receive data via props only.
+
+| Component | Description |
+|-----------|-------------|
+| `StatCard` | Dashboard statistics card: icon + title + value + optional trend |
+| `ActionButtons` | Edit / Delete button group for table rows |
+| `OAuthButton` | Social login button (Google, Facebook) |
+| `UserDropdown` | Avatar + username + dropdown menu |
+| `ThemeToggleBtn` | Light / Dark theme toggle button |
+| `NotificationBell` | Badge + bell icon for notifications |
+| `SidebarLogo` | Brand logo area inside the sidebar |
+
+### Organisms — `src/components/organisms/`
+
+Complex, feature-rich sections. May connect to Zustand stores or React context, but remain reusable across pages.
+
+| Component | Description |
+|-----------|-------------|
+| `AppHeader` | Top navigation bar (logo, menu toggle, theme, notifications, user) |
+| `AppSidebar` | Collapsible navigation sidebar with menu items |
+| `AppBreadcrumb` | Breadcrumb trail driven by current route |
+| `LoadingFullScreen` | Full-screen loading overlay |
+| `DataTable` | Paginated table synced with URL search params |
+| `FilterBar` | Declarative filter form synced with URL search params |
+| `LoginForm` | Complete login form UI (fields + OAuth buttons) |
+| `UserFormModal` | Create/Edit user modal form |
+| `ProductFormModal` | Create/Edit product modal form |
+| `OrderStatusModal` | Update order status modal |
+| `DashboardStats` | Row of 4 statistics cards |
+| `DashboardCharts` | Weekly bar chart and line trend chart |
+
+### Templates — `src/components/templates/`
+
+Page-level layout shells. Contain routing `<Outlet />` slots and define the overall page structure without real data.
+
+| Component | Description |
+|-----------|-------------|
+| `AdminTemplate` | Authenticated layout: AppHeader + AppSidebar + main content area |
+| `AuthTemplate` | Public layout: minimal wrapper for auth pages |
+
+### Pages — `src/modules/*/pages/`
+
+Specific instances of templates wired to real data. Pages live inside their **feature module** directory and connect to Zustand stores and services.
+
+```
+src/modules/
+├── auth/pages/        ← Login, Register, ForgotPassword
+├── dashboard/pages/   ← Dashboard (uses DashboardStats + DashboardCharts)
+├── users/pages/       ← UserList (uses DataTable + FilterBar + UserFormModal)
+├── products/pages/    ← ProductList
+└── orders/pages/      ← OrderList
+```
+
+### Data Flow
+
+```
+Pages → Templates (layout)
+Pages → Organisms (sections)
+Pages → Zustand Store → Services (API)
+Organisms → Molecules → Atoms
+```
+
+## Project Structure
 
 ```
 src/
-├── components/           # Reusable UI components
-│   ├── Loadable.tsx     # Code splitting wrapper
-│   ├── RootBoundary.tsx # Error boundary
-│   ├── loading/         # Loading components
-│   └── LoadingFullScreen/
-├── configs/             # Configuration files
-│   ├── app.config.ts    # App settings
-│   └── auth.config.ts   # Authentication config
-├── contexts/            # React contexts
-│   └── LoadingContext.tsx
-├── core/                # Core utilities
-│   ├── cache.ts         # Local storage cache manager
-│   ├── http.ts          # Axios HTTP client
-│   ├── helper.ts        # Utility functions
-│   └── models/          # Base models
+├── assets/              # Static assets (icons, images)
+├── components/
+│   ├── atoms/           # Primitive UI components
+│   ├── molecules/       # Atom compositions
+│   ├── organisms/       # Complex sections
+│   ├── templates/       # Layout shells
+│   └── utils/           # Loadable, RootBoundary, ScopeComponent
+├── configs/             # Auth, RBAC, breadcrumb configuration
+├── contexts/            # React contexts (LoadingContext)
+├── core/                # Cache, HTTP client, helpers
 ├── enums/               # TypeScript enums
-├── guards/              # Route guards
-│   ├── PrivateGuard.tsx # Protected routes
-│   └── PublicGuard.tsx  # Public routes
-├── hooks/               # Custom React hooks
+├── guards/              # Route guards (PrivateGuard, PublicGuard, PermissionGuard)
+├── hooks/               # Custom hooks (useMediaQuery, etc.)
 ├── interfaces/          # TypeScript interfaces
-├── layouts/             # Layout components
-│   ├── auth-layout/     # Authentication layout
-│   └── master-layout/   # Main app layout
-├── modules/             # Feature modules
-│   ├── auth/            # Authentication module
-│   │   └── pages/       # Login, Register, etc.
-│   └── home/            # Home module
-├── providers/           # Context providers
-├── routing/             # Routing configuration
-├── store/               # Zustand stores
-└── types/               # TypeScript type definitions
+├── mocks/               # Mock data for development
+├── modules/             # Feature modules (pages + hooks/stores + services)
+│   ├── auth/
+│   ├── dashboard/
+│   ├── users/
+│   ├── products/
+│   └── orders/
+├── providers/           # Context providers (LoadingProvider)
+├── routing/             # Router configuration + menu aggregation
+├── store/               # Global Zustand stores (theme, etc.)
+├── types/               # TypeScript type definitions
+└── utils/               # Utility functions (export, menu, etc.)
 ```
 
-## ✨ Features
-
-### 🔐 Authentication System
-- JWT-based authentication with local storage
-- Protected and public route guards
-- Automatic token injection in HTTP requests
-- Login/logout functionality with navigation
-
-### 🛣️ Advanced Routing
-- Nested routing with React Router 7
-- Module-based route organization
-- Lazy loading with React.lazy + Suspense
-- Error boundaries for route protection
-
-### 🎨 UI & UX
-- Ant Design 6 component library
-- Tailwind CSS 4 utility-first styling
-- Responsive layouts (Auth & Master)
-- Loading states and full-screen loaders
-- Light/Dark theme support
-
-### 🔧 State Management
-- Zustand for global state
-- React Context for loading states
-- Local storage caching system
-- HTTP interceptors for request/response handling
-
-### 📦 Code Organization
-- Modular architecture
-- TypeScript interfaces and types
-- Custom hooks for reusability
-- Utility functions and helpers
-
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
-- Node.js (version 18 or higher)
-- npm or yarn package manager
+
+- Node.js 18+
+- npm or yarn
 
 ### Installation
 
-1. Clone the repository:
 ```bash
 git clone <repository-url>
 cd react-sample
-```
-
-2. Install dependencies:
-```bash
 npm install
 ```
 
-3. Set up environment variables:
+### Environment Variables
+
 Create a `.env` file in the root directory:
+
 ```env
 VITE_PORT=3000
 VITE_PUBLIC_API_URL=your_api_url
@@ -115,150 +164,98 @@ LOCAL_CACHE_KEY=your_cache_key
 PUBLIC_URL=/
 ```
 
-4. Start the development server:
+### Development
+
 ```bash
 npm run dev
 ```
 
-5. Open your browser and navigate to `http://localhost:3000`
+Open [http://localhost:3000](http://localhost:3000).
 
-## 📜 Available Scripts
+## Available Scripts
 
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm run lint` - Run ESLint
-- `npm run preview` - Preview production build
+| Script | Description |
+|--------|-------------|
+| `npm run dev` | Start the Vite dev server |
+| `npm run build` | Type-check + production build |
+| `npm run lint` | Run ESLint |
+| `npm run preview` | Preview the production build |
 
-## 🔧 Configuration
+## Development Guidelines
 
-### Path Aliases
-The project uses Vite path aliases configured in `vite.config.ts`:
-- `@app` - Points to `./src` directory
+### Adding a New Module
 
-### HTTP Client
-- Axios instance with base URL configuration
-- Automatic Bearer token injection
-- Request/response interceptors
-- Error handling with 401 redirect
+1. Create `src/modules/<name>/` with `index.tsx`, `pages/`, `hooks/`, and `services/`
+2. Export `Router: RouteObject` and `MenuItems: IMenuItem[]` from `index.tsx`
+3. Add the module to the `modules` array in `src/routing/index.tsx`
 
-### Cache System
-- Local storage-based caching
-- Expiration time support
-- Automatic cleanup
-- Type-safe cache operations
+### Adding a New Component
 
-## 🛡️ Authentication Flow
+Follow the Atomic Design hierarchy:
 
-1. User navigates to protected route
-2. `PrivateGuard` checks for valid token in cache
-3. If no token, redirect to `/login`
-4. After successful login, token is stored in cache
-5. Subsequent API requests include Bearer token
-6. Logout clears token and redirects to login
-
-## 🎯 Development Guidelines
-
-### Adding New Modules
-1. Create folder in `src/modules/`
-2. Add `index.tsx` with route configuration
-3. Export `Router` and `MenuItems`
-4. Add to modules array in `src/routing/index.tsx`
-
-### State Management
-- Use Zustand stores for global state
-- React Context for component-tree state
-- Local storage cache for persistence
+- **Atom**: Stateless, no hooks, only styling/props
+- **Molecule**: Combines atoms, still no store/context access
+- **Organism**: Can use hooks, context, or Zustand stores; must be reusable
+- **Template**: Layout shell only — no direct data fetching
+- **Page**: Connect to stores/services; lives in `src/modules/*/pages/`
 
 ### Styling
-- Use Tailwind CSS 4 utility classes
-- Leverage Ant Design 6 theme system with CSS variables
-- Custom CSS overrides for antd components in `index.css`
 
-## 🔍 Code Quality
+- Use Tailwind CSS 4 utility classes as the primary styling method
+- Use Ant Design theme tokens via `ConfigProvider` in `AdminTemplate`
+- Global Ant Design overrides live in `src/index.css`
 
-- TypeScript for type safety
-- ESLint for code linting
-- Modular architecture
-- Consistent file naming
-- Interface-driven development
+## Authentication Flow
 
-## 🚀 Production Build
+1. User accesses a protected route
+2. `PrivateGuard` checks for a valid token in the cache
+3. No token → redirect to `/login`
+4. Login success → token and user data stored in local storage cache
+5. All subsequent API calls include the `Bearer` token via Axios interceptor
+6. Logout clears the cache and redirects to `/login`
 
-The application builds to `dist/react-sample/` directory and is ready for deployment to any static hosting service.
+## Configuration
 
-```bash
-npm run build
-```
+### Path Aliases
 
-## 🤝 Contributing
+- `@app/*` → `src/*` (configured in `vite.config.ts` and `tsconfig.json`)
 
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Run linting and tests
-5. Submit a pull request
+### HTTP Client (`src/core/http.ts`)
 
-## 📋 Changelog
+- Axios instance with `BASE_API_URL`
+- Request interceptor injects `Authorization: Bearer <token>`
+- Response interceptor redirects to `/login` on `401`
+
+## Changelog
+
+### v3.0.0 — Atomic Design Refactor
+
+- Reorganized `src/components/` into `atoms/`, `molecules/`, `organisms/`, `templates/`, `utils/`
+- Removed `src/layouts/` — layouts migrated to `components/templates/`
+- Extracted `LoginForm`, `DashboardStats`, `DashboardCharts` organisms
+- Extracted `StatCard`, `ActionButtons`, `OAuthButton`, `UserDropdown`, `ThemeToggleBtn`, `NotificationBell`, `SidebarLogo` molecules
+- Added `StatusTag`, `GradientAvatar`, `Spinner`, `AppIcon` atoms
+- Moved form modals (`UserFormModal`, `ProductFormModal`, `OrderStatusModal`) to organisms
+- Added barrel exports (`index.ts`) for each component tier
+- Updated all import paths across the codebase
 
 ### v2.0.0 — Major Dependencies Upgrade (2026-02-11)
 
-**Dependencies (Major)**
-
-| Package | Before | After | Notes |
-|---------|--------|-------|-------|
-| react | 18.2 | **19.x** | Functional components only, no breaking changes |
-| react-dom | 18.2 | **19.x** | Already used `createRoot` |
-| antd | 5.13 | **6.x** | CSS variables mode by default, React 19 native |
-| zustand | 4.5 | **5.x** | Same `create` + `persist` API |
-| react-router-dom | 6.20 | **react-router 7.x** | Package renamed, data router pattern preserved |
-
-**Dependencies (Minor/Patch)**
-
 | Package | Before | After |
 |---------|--------|-------|
-| axios | 1.6 | **1.x (latest)** |
-| dayjs | 1.11.10 | **1.11.x (latest)** |
+| react | 18.2 | 19.x |
+| antd | 5.13 | 6.x |
+| zustand | 4.5 | 5.x |
+| react-router-dom | 6.20 | react-router 7.x |
+| vite | 5.0 | 6.x |
+| tailwindcss | 3.4 | 4.x |
+| eslint | 8.55 | 9.x |
 
-**DevDependencies (Major)**
+## License
 
-| Package | Before | After | Notes |
-|---------|--------|-------|-------|
-| vite | 5.0 | **6.x** | Updated browser targets |
-| tailwindcss | 3.4 | **4.x** | CSS-first config, `@tailwindcss/postcss` |
-| eslint | 8.55 | **9.x** | Migrated to flat config (`eslint.config.js`) |
-| typescript | 5.2 | **5.x (latest)** | |
-| eslint-plugin-react-hooks | 4.6 | **5.x** | Flat config support |
-| sass | 1.70 | **1.x (latest)** | |
+This project is public.
 
-**Packages Removed**
-
-- `@loadable/component` — replaced with native `React.lazy` + `Suspense`
-- `@types/loadable__component` — no longer needed
-- `react-router-dom` — replaced by `react-router` (v7 unified package)
-- `autoprefixer` — built into Tailwind CSS 4
-- `@typescript-eslint/eslint-plugin` + `@typescript-eslint/parser` — replaced by `typescript-eslint`
-
-**Packages Added**
-
-- `@tailwindcss/postcss` — Tailwind CSS 4 PostCSS plugin
-- `@eslint/js`, `globals`, `typescript-eslint` — ESLint 9 flat config
-
-**Code Changes**
-
-- Rewrote `src/components/Loadable.tsx` to use `React.lazy` + `Suspense`
-- Changed all `react-router-dom` / `react-router` imports to `react-router` (15+ files)
-- Replaced deprecated `RouterProvider.fallbackElement` with `Suspense` wrapper
-- Migrated `@tailwind` directives to `@import "tailwindcss/"` (v4 CSS-first syntax)
-- Disabled Tailwind preflight via granular imports to preserve antd styling
-- Migrated `postcss.config.js` to use `@tailwindcss/postcss`
-- Migrated `.eslintrc.cjs` to `eslint.config.js` (ESLint 9 flat config)
-- Updated lint script (removed `--ext` flag, not needed in flat config)
-- Added antd v6 focus ring overrides (`outline: none`) for all input types
-
-## 📄 License
-
-This project is public
-## 👨‍💻 Author
+## Author
 
 **Hiep Nguyen Ngoc**
 - Portfolio: https://hiepnn.com/
