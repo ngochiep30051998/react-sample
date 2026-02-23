@@ -1,20 +1,28 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router';
-import { App, Button, Space, Tag } from 'antd';
+import { App, Button } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { DownloadOutlined, PlusOutlined } from '@ant-design/icons';
-import BaseFilter, { type FilterField } from '@app/components/BaseFilter';
-import BaseTable from '@app/components/BaseTable';
+import FilterBar, { type FilterField } from '@app/components/organisms/FilterBar';
+import DataTable from '@app/components/organisms/DataTable';
+import UserFormModal from '@app/components/organisms/UserFormModal';
+import StatusTag from '@app/components/atoms/StatusTag';
+import ActionButtons from '@app/components/molecules/ActionButtons';
 import { exportToExcel } from '@app/utils/export.utils';
 import type { MockUser } from '@app/mocks/users.mock';
 import useUserStore from '../hooks/useUserStore';
-import UserFormModal from './UserFormModal';
 
 const FILTER_FIELDS: FilterField[] = [
   { name: 'q', type: 'input', placeholder: 'Search...', width: 200 },
   {
-    name: 'status', type: 'select', placeholder: 'Status', width: 120,
-    options: [{ value: 'active', label: 'Active' }, { value: 'inactive', label: 'Inactive' }],
+    name: 'status',
+    type: 'select',
+    placeholder: 'Status',
+    width: 120,
+    options: [
+      { value: 'active', label: 'Active' },
+      { value: 'inactive', label: 'Inactive' },
+    ],
   },
 ];
 
@@ -34,49 +42,82 @@ export default function UserList() {
     fetchList({ page, per_page, q, status });
   }, [fetchList, page, per_page, q, status]);
 
-  useEffect(() => { load(); }, [load]);
+  useEffect(() => {
+    load();
+  }, [load]);
 
   const handleDelete = async (id: string) => {
-    if (await remove(id)) { message.success('User deleted'); load(); }
-    else message.error('Failed to delete');
+    if (await remove(id)) {
+      message.success('User deleted');
+      load();
+    } else {
+      message.error('Failed to delete');
+    }
   };
 
-  const handleEdit = (id: string) => { setEditingId(id); setModalOpen(true); };
-  const handleModalClose = () => { setModalOpen(false); setEditingId(null); load(); };
+  const handleEdit = (id: string) => {
+    setEditingId(id);
+    setModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setModalOpen(false);
+    setEditingId(null);
+    load();
+  };
 
   const columns: ColumnsType<MockUser> = [
     { title: 'Username', dataIndex: 'username', key: 'username' },
     { title: 'Email', dataIndex: 'email', key: 'email' },
     { title: 'Full Name', dataIndex: 'fullName', key: 'fullName' },
     {
-      title: 'Status', dataIndex: 'status', key: 'status',
-      render: (s: string) => <Tag color={s === 'active' ? 'green' : 'red'}>{s}</Tag>,
+      title: 'Status',
+      dataIndex: 'status',
+      key: 'status',
+      render: (s: string) => <StatusTag status={s} />,
     },
     { title: 'Created', dataIndex: 'createdAt', key: 'createdAt' },
     {
-      title: 'Actions', key: 'actions',
+      title: 'Actions',
+      key: 'actions',
       render: (_, record) => (
-        <Space>
-          <Button type="link" size="small" onClick={() => handleEdit(record.id)}>Edit</Button>
-          <Button type="link" size="small" danger onClick={() => handleDelete(record.id)}>Delete</Button>
-        </Space>
+        <ActionButtons
+          onEdit={() => handleEdit(record.id)}
+          onDelete={() => handleDelete(record.id)}
+        />
       ),
     },
   ];
 
   return (
     <div className="animate-fade-in">
-      <BaseFilter
+      <FilterBar
         fields={FILTER_FIELDS}
         actions={
           <>
-            <Button type="primary" icon={<PlusOutlined />} onClick={() => { setEditingId(null); setModalOpen(true); }}>Add User</Button>
-            <Button icon={<DownloadOutlined />} onClick={() => exportToExcel(data, `users-${new Date().toISOString().slice(0, 10)}.xlsx`, 'Users')}>Export Excel</Button>
+            <Button
+              type="primary"
+              icon={<PlusOutlined />}
+              onClick={() => {
+                setEditingId(null);
+                setModalOpen(true);
+              }}
+            >
+              Add User
+            </Button>
+            <Button
+              icon={<DownloadOutlined />}
+              onClick={() =>
+                exportToExcel(data, `users-${new Date().toISOString().slice(0, 10)}.xlsx`, 'Users')
+              }
+            >
+              Export Excel
+            </Button>
           </>
         }
       />
 
-      <BaseTable<MockUser>
+      <DataTable<MockUser>
         columns={columns}
         dataSource={data}
         rowKey="id"

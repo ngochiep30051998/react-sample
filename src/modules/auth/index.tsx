@@ -1,5 +1,5 @@
 import { RouteObject } from 'react-router';
-import loadable from '../../components/Loadable';
+import loadable from '@app/components/utils/Loadable';
 
 const Login = loadable(() => import('./pages/login/Login'));
 const ForgotPassword = loadable(() => import('./pages/forgot-password/ForgotPassword'));
@@ -10,16 +10,15 @@ export const Router: RouteObject = {
   children: [
     {
       path: 'login',
-      element: <Login />
+      element: <Login />,
     },
     {
       path: 'forgotPassword',
-      element: <ForgotPassword />
+      element: <ForgotPassword />,
     },
     {
       path: 'register',
-      element: <Register />
-    }
-  ]
-}
-
+      element: <Register />,
+    },
+  ],
+};

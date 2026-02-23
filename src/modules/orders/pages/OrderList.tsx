@@ -1,27 +1,24 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router';
-import { App, Button, Space, Tag } from 'antd';
+import { App, Button } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { DownloadOutlined } from '@ant-design/icons';
-import BaseFilter, { type FilterField } from '@app/components/BaseFilter';
-import BaseTable from '@app/components/BaseTable';
+import FilterBar, { type FilterField } from '@app/components/organisms/FilterBar';
+import DataTable from '@app/components/organisms/DataTable';
+import OrderStatusModal from '@app/components/organisms/OrderStatusModal';
+import StatusTag from '@app/components/atoms/StatusTag';
+import ActionButtons from '@app/components/molecules/ActionButtons';
 import { exportToExcel } from '@app/utils/export.utils';
 import type { MockOrder } from '@app/mocks/orders.mock';
 import useOrderStore from '../hooks/useOrderStore';
-import OrderStatusModal from './OrderStatusModal';
-
-const STATUS_COLOR: Record<string, string> = {
-  pending: 'orange',
-  processing: 'blue',
-  shipped: 'cyan',
-  delivered: 'green',
-  cancelled: 'red',
-};
 
 const FILTER_FIELDS: FilterField[] = [
   { name: 'q', type: 'input', placeholder: 'Search orders...', width: 200 },
   {
-    name: 'status', type: 'select', placeholder: 'Status', width: 140,
+    name: 'status',
+    type: 'select',
+    placeholder: 'Status',
+    width: 140,
     options: [
       { value: 'pending', label: 'Pending' },
       { value: 'processing', label: 'Processing' },
@@ -48,46 +45,92 @@ export default function OrderList() {
     fetchList({ page, per_page, q, status });
   }, [fetchList, page, per_page, q, status]);
 
-  useEffect(() => { load(); }, [load]);
+  useEffect(() => {
+    load();
+  }, [load]);
 
   const handleDelete = async (id: string) => {
-    if (await remove(id)) { message.success('Order deleted'); load(); }
-    else message.error('Failed to delete');
+    if (await remove(id)) {
+      message.success('Order deleted');
+      load();
+    } else {
+      message.error('Failed to delete');
+    }
   };
 
   const columns: ColumnsType<MockOrder> = [
-    { title: 'Order No', dataIndex: 'orderNo', key: 'orderNo', render: (v: string) => <span className="font-medium text-primary">{v}</span> },
+    {
+      title: 'Order No',
+      dataIndex: 'orderNo',
+      key: 'orderNo',
+      render: (v: string) => <span className="font-medium text-primary">{v}</span>,
+    },
     { title: 'Customer', dataIndex: 'customer', key: 'customer' },
     { title: 'Email', dataIndex: 'email', key: 'email' },
     { title: 'Items', dataIndex: 'items', key: 'items', align: 'center' },
-    { title: 'Total', dataIndex: 'total', key: 'total', render: (v: number) => `$${v.toLocaleString()}` },
     {
-      title: 'Status', dataIndex: 'status', key: 'status',
-      render: (s: string) => <Tag color={STATUS_COLOR[s] ?? 'default'}>{s.charAt(0).toUpperCase() + s.slice(1)}</Tag>,
+      title: 'Total',
+      dataIndex: 'total',
+      key: 'total',
+      render: (v: number) => `$${v.toLocaleString()}`,
+    },
+    {
+      title: 'Status',
+      dataIndex: 'status',
+      key: 'status',
+      render: (s: string) => <StatusTag status={s} />,
     },
     { title: 'Created', dataIndex: 'createdAt', key: 'createdAt' },
     {
-      title: 'Actions', key: 'actions',
+      title: 'Actions',
+      key: 'actions',
       render: (_, record) => (
-        <Space>
-          <Button type="link" size="small" onClick={() => { setSelectedOrder(record); setStatusModalOpen(true); }}>Update Status</Button>
-          <Button type="link" size="small" danger onClick={() => handleDelete(record.id)}>Delete</Button>
-        </Space>
+        <ActionButtons
+          onEdit={() => {
+            setSelectedOrder(record);
+            setStatusModalOpen(true);
+          }}
+          onDelete={() => handleDelete(record.id)}
+          editLabel="Update Status"
+        />
       ),
     },
   ];
 
   return (
     <div className="animate-fade-in">
-      <BaseFilter
+      <FilterBar
         fields={FILTER_FIELDS}
         actions={
-          <Button icon={<DownloadOutlined />} onClick={() => exportToExcel(data, `orders-${new Date().toISOString().slice(0, 10)}.xlsx`, 'Orders')}>Export</Button>
+          <Button
+            icon={<DownloadOutlined />}
+            onClick={() =>
+              exportToExcel(data, `orders-${new Date().toISOString().slice(0, 10)}.xlsx`, 'Orders')
+            }
+          >
+            Export
+          </Button>
         }
       />
 
-      <BaseTable<MockOrder> columns={columns} dataSource={data} rowKey="id" loading={loading} total={total} showTotal={(t) => `Total ${t} orders`} />
-      <OrderStatusModal open={statusModalOpen} order={selectedOrder} onClose={() => { setStatusModalOpen(false); setSelectedOrder(null); load(); }} />
+      <DataTable<MockOrder>
+        columns={columns}
+        dataSource={data}
+        rowKey="id"
+        loading={loading}
+        total={total}
+        showTotal={(t) => `Total ${t} orders`}
+      />
+
+      <OrderStatusModal
+        open={statusModalOpen}
+        order={selectedOrder}
+        onClose={() => {
+          setStatusModalOpen(false);
+          setSelectedOrder(null);
+          load();
+        }}
+      />
     </div>
   );
 }
