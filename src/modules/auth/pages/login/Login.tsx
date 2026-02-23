@@ -13,7 +13,17 @@ const Login = () => {
   const handleFinish = async (values: LoginFormValues) => {
     loading.show();
     await sleep(1000);
-    const roles = [ROLES.ADMIN];
+    // TODO: Get roles from backend
+    const username = values.username;
+    let roles: string[] = [];
+    if (username === 'admin') {
+      roles = [ROLES.ADMIN];
+    } else if (username === 'manager') {
+      roles = [ROLES.MANAGER];
+    } else {
+      roles = [ROLES.USER];
+    }
+    
     const permissions = getPermissionsForRoles(roles);
     cache.setCache(LOCAL_USER_KEY, {
       token: 'demo-token',

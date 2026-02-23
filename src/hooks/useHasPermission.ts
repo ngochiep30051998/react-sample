@@ -15,3 +15,17 @@ export function useHasPermission(permission: string): boolean {
   }
   return false;
 }
+
+const NO_PERMISSION = '__no_permission__';
+
+/** Returns true if the user has at least one of the given permissions. */
+export function useHasAnyPermission(
+  editPermission?: string,
+  deletePermission?: string,
+  viewPermission?: string
+): boolean {
+  const hasEdit = useHasPermission(editPermission ?? NO_PERMISSION);
+  const hasDelete = useHasPermission(deletePermission ?? NO_PERMISSION);
+  const hasView = useHasPermission(viewPermission ?? NO_PERMISSION);
+  return hasEdit || hasDelete || hasView;
+}
