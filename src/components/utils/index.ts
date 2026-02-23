@@ -1,3 +1,4 @@
 export { default as loadable } from './Loadable';
-export { RootBoundary } from './RootBoundary';
-export { default as ScopeComponent } from './ScopeComponent';
+// Backward compatibility: atomic design equivalents
+export { RouteErrorBoundary as RootBoundary } from '../organisms/RouteErrorBoundary';
+export { default as ScopeComponent } from '../atoms/ScopeTag';

@@ -1,6 +1,6 @@
 import { isRouteErrorResponse, useRouteError } from 'react-router';
 
-export function RootBoundary() {
+export function RouteErrorBoundary() {
   const error = useRouteError();
   if (isRouteErrorResponse(error)) {
     if (error.status === 404) {

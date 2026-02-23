@@ -1,6 +1,6 @@
 import { RouterProvider, createBrowserRouter } from 'react-router';
 import { Suspense } from 'react';
-import { RootBoundary } from '@app/components/utils/RootBoundary';
+import { RouteErrorBoundary } from '@app/components/organisms/RouteErrorBoundary';
 import AdminTemplate from '@app/components/templates/AdminTemplate';
 import AuthTemplate from '@app/components/templates/AuthTemplate';
 import Spinner from '@app/components/atoms/Spinner';
@@ -20,7 +20,7 @@ const router = createBrowserRouter(
   [
     {
       path: '/',
-      errorElement: <RootBoundary />,
+      errorElement: <RouteErrorBoundary />,
       HydrateFallback: Spinner,
       children: [
         {
