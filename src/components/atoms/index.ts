@@ -49,7 +49,7 @@ export { default as AppDivider } from './AppDivider';
 export { default as AppFlex } from './AppFlex';
 export { default as AppCarousel } from './AppCarousel';
 export { default as AppTable } from './AppTable';
-export { default as AppBreadcrumb } from './AppBreadcrumb';
+export { default as AppBreadcrumbList } from './AppBreadcrumb';
 export { default as AppMenu } from './AppMenu';
 export { default as AppRow } from './AppRow';
 export { default as AppCol } from './AppCol';
